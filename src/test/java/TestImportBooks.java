@@ -1,14 +1,22 @@
+import company.databases.BookCopyDataBase;
 import company.databases.BookDataBase;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class to test the method importBooks from the class
  * {@link BookDataBase} that contains testing methods when
- * an attempt is made to import a book from one csv File.
+ * an attempt is made to import books from one csv File
+ * and the method importBookCopies from the class
+ * {@link BookCopyDataBase} that contains testing methods when
+ * an attempt is made to import book copies from one csv File
  *
  * @author Mohamed
- * @version 25.05.2020
+ * @version 27.05.2020
  */
 
 public class TestImportBooks {
@@ -19,12 +27,20 @@ public class TestImportBooks {
      * imported.
      */
     @Test
-    public void importBooks() {
+    public void importBooksAndBookCopies() {
+        /* Preparing Test
+         * initialise and connect the data bases with each other
+         */
         final BookDataBase bookDataBase = new BookDataBase();
+        final BookCopyDataBase bookCopyDataBase = new BookCopyDataBase();
+        bookCopyDataBase.setBookDataBase(bookDataBase.getBookDataBase());
+        bookDataBase.setBookCopyDataBase(bookCopyDataBase.getBookCopyDataBase());
+
+
         //check data base empty before importing the books
         assertEquals(bookDataBase.getBookDataBase().size(), 0);
 
-        bookDataBase.importBooks("src\\test\\java\\ressources\\csvFileToTest.csv");
+        bookDataBase.importBooks("src\\test\\java\\ressources\\csvFileToTestBooks.csv");
 
         //check the number of imported books
         assertEquals(bookDataBase.getBookDataBase().size(), 5);
@@ -49,5 +65,28 @@ public class TestImportBooks {
         // Ausgabe aller Städten, wo die Bücher erstellt wurden
         bookDataBase.getBookDataBase().stream().map(book -> book.getCity()).forEach(System.out::println);
 
+        assertEquals(bookDataBase.getBookDataBase().size(), 5);
+
+        // Zweiter Teil ; ImportBookCopy
+
+        // Check that the book copy data base is empty before the import
+        assertEquals(bookCopyDataBase.getBookCopyDataBase().size(), 0);
+
+        bookCopyDataBase.importBookCopies("src\\test\\java\\ressources\\csvFileToTestBookCopies");
+
+        // check the number of imported books
+        assertEquals(bookCopyDataBase.getBookCopyDataBase().size(), 8);
+
+        // check that all book copies, whose books belong to the data base, have been imported.
+
+        assertEquals(bookCopyDataBase.getBookCopyDataBase().stream().filter(bookCopy ->
+                bookCopy.getBook().getTitle().equals("Mathematik")).collect(Collectors.toList()).size(), 4);
+        assertEquals(bookCopyDataBase.getBookCopyDataBase().stream().filter(bookCopy ->
+                bookCopy.getBook().getTitle().equals("Theoretische Informatik")).collect(Collectors.toList()).size(), 3);
+        assertEquals(bookCopyDataBase.getBookCopyDataBase().stream().filter(bookCopy ->
+                bookCopy.getBook().getTitle().equals("I hate school")).collect(Collectors.toList()).size(), 1);
+
+
     }
+
 }

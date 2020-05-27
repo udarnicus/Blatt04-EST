@@ -1,7 +1,6 @@
 package company.databases;
 
 
-
 import company.objects.Book;
 import company.objects.BookCopy;
 
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
  * Represents the Book data base
  * <p>
  * After creating the database, the bookCopyDataBase attribute has to be linked to the bookCopyDataBase
- *
+ * <p>
  * TEST TEST TEST
  */
 public class BookDataBase {
@@ -49,7 +48,9 @@ public class BookDataBase {
                     authors.add(bookAttributes[i]);
                 }
                 final Book book = new Book(bookAttributes[0], authors, bookAttributes[1], bookAttributes[2], bookAttributes[3], bookAttributes[4], Integer.parseInt(bookAttributes[5]));
-                bookDataBase.add(book);
+                //bookDataBase.add(book);
+                this.addBook(book);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,7 +67,7 @@ public class BookDataBase {
      * @return
      */
     public boolean addBook(Book book) {
-        if (!getBookDataBase().contains(book)) {
+        if (bookDataBase.stream().filter(book1 -> book1.getIsbn().equals(book.getIsbn())).collect(Collectors.toList()).size() == 0) {
             getBookDataBase().add(book);
             return true;
         }
@@ -154,6 +155,12 @@ public class BookDataBase {
      */
     public ArrayList<Book> getBookDataBase() {
         return bookDataBase;
+    }
+
+    public static void main(String[] args) {
+        BookDataBase bookDataBase = new BookDataBase();
+        bookDataBase.importBooks("src\\test\\java\\ressources\\csvFileToTestBooks.csv");
+
     }
 
 }
