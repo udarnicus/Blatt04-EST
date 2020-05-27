@@ -74,22 +74,8 @@ public class Kommandozeile {
 	            System.out.println("Action executed succesfully!");
 	            break;
 	        case 7:
-	        	String customerID = readClientID();
-				for(Customer customer: customerDataBase.getCustomerDataBase()){
-					if (customer.getClientId().equals(customerID)){
-						if(customerDataBase.deleteCustomer(customer)){
-							System.out.println("Customer deleted succesfully!");
-							break;
-						}else{
-							System.out.println("Customer could not be deleted!");
-							break;
-						}
-					}
-
-				}
-				System.out.println("Customer could not be found");
-	            break;
-	        case 8:
+				deleteCustomerFromDatabase();
+			case 8:
 				String bookISBN = readBookISBN();
 				for(Book book: bookDataBase.getBookDataBase()){
 					if (book.getIsbn().equals(bookISBN)){
@@ -140,7 +126,24 @@ public class Kommandozeile {
 
 	    }
 	}
-	
+
+	private static void deleteCustomerFromDatabase() {
+		String customerID = readClientID();
+		for(Customer customer: customerDataBase.getCustomerDataBase()){
+			if (customer.getClientId().equals(customerID)){
+				if(customerDataBase.deleteCustomer(customer)){
+					System.out.println("Customer deleted succesfully!");
+					return;
+				}else{
+					System.out.println("Customer could not be deleted!");
+					return;
+				}
+			}
+
+		}
+		System.out.println("Customer could not be found");
+	}
+
 	/**
 	 * Reads Client ID
 	 * 
