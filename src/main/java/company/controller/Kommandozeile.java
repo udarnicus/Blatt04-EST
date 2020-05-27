@@ -77,20 +77,7 @@ public class Kommandozeile {
 				deleteCustomerFromDatabase();
 				break;
 			case 8:
-				String bookISBN = readBookISBN();
-				for(Book book: bookDataBase.getBookDataBase()){
-					if (book.getIsbn().equals(bookISBN)){
-						if(bookDataBase.deleteBook(book)){
-							System.out.println("Book deleted succesfully!");
-							break;
-						}else{
-							System.out.println("Book could not be deleted!");
-							break;
-						}
-					}
-
-				}
-				System.out.println("Book could not be found");
+				deleteBookFromDataBase();
 				break;
 	        case 9:
 				String bookCopyID = readBookCopyID();
@@ -126,6 +113,26 @@ public class Kommandozeile {
 	        
 
 	    }
+	}
+
+	/**
+	 * Deletes Book From Database
+	 */
+	private static void deleteBookFromDataBase() {
+		String bookISBN = readBookISBN();
+		for(Book book: bookDataBase.getBookDataBase()){
+			if (book.getIsbn().equals(bookISBN)){
+				if(bookDataBase.deleteBook(book)){
+					System.out.println("Book deleted succesfully!");
+					return;
+				}else{
+					System.out.println("Book could not be deleted!");
+					return;
+				}
+			}
+
+		}
+		System.out.println("Book could not be found");
 	}
 
 	/**
