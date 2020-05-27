@@ -75,6 +75,7 @@ public class Kommandozeile {
 	            break;
 	        case 7:
 				deleteCustomerFromDatabase();
+				break;
 			case 8:
 				String bookISBN = readBookISBN();
 				for(Book book: bookDataBase.getBookDataBase()){
