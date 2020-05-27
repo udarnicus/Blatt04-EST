@@ -128,6 +128,10 @@ public class Kommandozeile {
 	    }
 	}
 
+	/**
+	 * Deletes Customer from Database
+	 *
+	 */
 	private static void deleteCustomerFromDatabase() {
 		String customerID = readClientID();
 		for(Customer customer: customerDataBase.getCustomerDataBase()){
