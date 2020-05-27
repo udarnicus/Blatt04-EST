@@ -71,8 +71,8 @@ public class Kommandozeile {
 	            System.out.println("Book borrowed succesfully!");
 	            break;
 	        case 6:
-	            System.out.println("Action executed succesfully!");
-	            break;
+	        	returnBookCopy();
+				break;
 	        case 7:
 				deleteCustomerFromDatabase();
 				break;
@@ -100,6 +100,28 @@ public class Kommandozeile {
 	        
 
 	    }
+	}
+
+	/**
+	 * Returns inportant information about the Book Copy
+	 *
+	 * User has to input the Book ISBN and the ID of the book Copy
+	 */
+	private static void returnBookCopy() {
+		String bookISBN = readBookISBN();
+		String bookCopyID = readBookCopyID();
+		for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()){
+			if(bookCopy.getBook().getIsbn().equals(bookISBN) && bookCopy.getId().equals(bookCopyID)){
+				System.out.println("Book Copy Title: " + bookCopy.getBook().getTitle());
+				System.out.println("Book Copy ID: " + bookCopy.getId());
+				System.out.println("Book Copy ISBN: " +  bookCopy.getBook().getIsbn());
+				System.out.println("Book Copy Loan Status: " +  bookCopy.getLoanStatus());
+				System.out.println("Book Copy Location: " +  bookCopy.getLocation());
+				System.out.println("Book Copy was added to the library on: " +  bookCopy.getAddedToLibrary());
+				return;
+			}
+		}
+		System.out.println("Book Copy could not be found!");
 	}
 
 	/**
