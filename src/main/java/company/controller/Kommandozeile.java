@@ -80,20 +80,7 @@ public class Kommandozeile {
 				deleteBookFromDataBase();
 				break;
 	        case 9:
-				String bookCopyID = readBookCopyID();
-				for(BookCopy bookCopy: bookCopyDataBase.getBookCopyDataBase()){
-					if (bookCopy.getId().equals(bookCopyID)){
-						if(bookCopyDataBase.deleteBookCopy(bookCopy)){
-							System.out.println("Book copy deleted succesfully!");
-							return;
-						}else{
-							System.out.println("Book copy could not be deleted!");
-							break;
-						}
-					}
-
-				}
-				System.out.println("Book copy could not be found");
+				deleteBookCopyFromDatabase();
 				break;
 	        case 10:
 	            System.out.println("Action executed succesfully!");
@@ -113,6 +100,27 @@ public class Kommandozeile {
 	        
 
 	    }
+	}
+
+	/**
+	 * Delete Book Copy From DataBase
+	 *
+	 */
+	private static void deleteBookCopyFromDatabase() {
+		String bookCopyID = readBookCopyID();
+		for(BookCopy bookCopy: bookCopyDataBase.getBookCopyDataBase()){
+			if (bookCopy.getId().equals(bookCopyID)){
+				if(bookCopyDataBase.deleteBookCopy(bookCopy)){
+					System.out.println("Book copy deleted succesfully!");
+					return;
+				}else{
+					System.out.println("Book copy could not be deleted!");
+					return;
+				}
+			}
+
+		}
+		System.out.println("Book copy could not be found");
 	}
 
 	/**
