@@ -7,6 +7,8 @@ import company.objects.Book;
 import company.objects.BookCopy;
 import company.objects.Customer;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Kommandozeile {
@@ -109,7 +111,7 @@ public class Kommandozeile {
 					if (bookCopy.getId().equals(bookCopyID)){
 						if(bookCopyDataBase.deleteBookCopy(bookCopy)){
 							System.out.println("Book copy deleted succesfully!");
-							break;
+							return;
 						}else{
 							System.out.println("Book copy could not be deleted!");
 							break;
@@ -210,6 +212,39 @@ public class Kommandozeile {
 
 		bookDataBase.setBookCopyDataBase(bookCopyDataBase.getBookCopyDataBase());
 		bookCopyDataBase.setBookDataBase(bookDataBase.getBookDataBase());
+
+
+		fillDatabasesWithDummyObjects();
+
+	}
+
+	private static void fillDatabasesWithDummyObjects() {
+		ArrayList<String> authors = new ArrayList<>();
+		authors.add("Goethe");
+		Customer customer1 = new Customer("Testing", "Tester", "123456", "Home", "1234", "Stuttgart");
+		Book Book1 = new Book( "Test", authors, "2020", "123","Stuttgart", "TestingTesterWriter", 1);
+		BookCopy BookCopy1 = new BookCopy(Book1, "111", "Regal 1 Fach 2", new Date());
+
+		Customer customer2 = new Customer("Max", "Mustermann", "123457", "Sesame Street", "70763", "Mannheim");
+		Book Book2 = new Book( "Faust", authors, "1999", "124","Stuttgart", "UNISTUTTGART", 5);
+		BookCopy BookCopy2 = new BookCopy(Book2, "110", "Regal 1 Fach 2", new Date());
+
+		Customer customer3 = new Customer("Bob", "Rob", "123458", "Brodway", "223233", "Hollywood");
+		Book Book3 = new Book( "Java für Dummies", authors, "2020", "125","Stuttgart", "TestingTesterWriter",
+				1);
+		BookCopy BookCopy3 = new BookCopy(Book3, "2", "Regal 1 Fach 2", new Date());
+
+		customerDataBase.addCustomer(customer1);
+		customerDataBase.addCustomer(customer2);
+		customerDataBase.addCustomer(customer3);
+
+		bookDataBase.addBook(Book1);
+		bookDataBase.addBook(Book2);
+		bookDataBase.addBook(Book3);
+
+		bookCopyDataBase.addBookCopy(BookCopy1);
+		bookCopyDataBase.addBookCopy(BookCopy2);
+		bookCopyDataBase.addBookCopy(BookCopy3);
 	}
 
 	public static BookCopyDataBase getBookCopyDataBase() {
