@@ -184,7 +184,6 @@ public class Kommandozeile {
                     return;
                 }
             }
-
         }
         System.out.println("Customer could not be found");
     }

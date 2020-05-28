@@ -156,11 +156,4 @@ public class BookDataBase {
     public ArrayList<Book> getBookDataBase() {
         return bookDataBase;
     }
-
-    public static void main(String[] args) {
-        BookDataBase bookDataBase = new BookDataBase();
-        bookDataBase.importBooks("src\\test\\java\\ressources\\csvFileToTestBooks.csv");
-
-    }
-
 }

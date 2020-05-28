@@ -20,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 public class TestImportBooks {
+    final BookDataBase bookDataBase = new BookDataBase();
+    final BookCopyDataBase bookCopyDataBase = new BookCopyDataBase();
+
     /**
      * The books will be imported and then it will be checked, if
      * all books have been imported. Then many attributes will be
@@ -31,8 +34,7 @@ public class TestImportBooks {
         /* Preparing Test
          * initialise and connect the data bases with each other
          */
-        final BookDataBase bookDataBase = new BookDataBase();
-        final BookCopyDataBase bookCopyDataBase = new BookCopyDataBase();
+
         bookCopyDataBase.setBookDataBase(bookDataBase.getBookDataBase());
         bookDataBase.setBookCopyDataBase(bookCopyDataBase.getBookCopyDataBase());
 
