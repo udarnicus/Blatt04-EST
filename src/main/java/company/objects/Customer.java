@@ -76,4 +76,19 @@ public class Customer {
     public void setOverdrafFeeStatus(boolean overdrafFeeStatus) {
         this.overdrafFeeStatus = overdrafFeeStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", clientId='" + clientId + '\'' +
+                ", address='" + address + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", city='" + city + '\'' +
+                ", paymentStatus=" + paymentStatus +
+                ", overdrafFeeStatus=" + overdrafFeeStatus +
+                ", booksOnLoan=" + booksOnLoan +
+                '}';
+    }
 }

@@ -64,7 +64,10 @@ public class Kommandozeile {
                 System.out.println(bookCopyDataBase.getBookCopyDataBase().size() - 3 + " book copies have been imported successfully");
                 break;
             case 3:
-                System.out.println("Action executed succesfully!");
+                String csvFilePathCustomers = readCSVFilePath();
+                customerDataBase.importCustomers(csvFilePathCustomers);
+                // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
+                System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported successfully");
                 break;
             case 4:
                 System.out.println("Action executed succesfully!");

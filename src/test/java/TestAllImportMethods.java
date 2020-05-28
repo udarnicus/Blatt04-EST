@@ -1,8 +1,8 @@
 import company.databases.BookCopyDataBase;
 import company.databases.BookDataBase;
+import company.databases.CustomerDataBase;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,9 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version 27.05.2020
  */
 
-public class TestImportBooks {
-    final BookDataBase bookDataBase = new BookDataBase();
-    final BookCopyDataBase bookCopyDataBase = new BookCopyDataBase();
+public class TestAllImportMethods {
+
 
     /**
      * The books will be imported and then it will be checked, if
@@ -34,7 +33,8 @@ public class TestImportBooks {
         /* Preparing Test
          * initialise and connect the data bases with each other
          */
-
+        final BookDataBase bookDataBase = new BookDataBase();
+        final BookCopyDataBase bookCopyDataBase = new BookCopyDataBase();
         bookCopyDataBase.setBookDataBase(bookDataBase.getBookDataBase());
         bookDataBase.setBookCopyDataBase(bookCopyDataBase.getBookCopyDataBase());
 
@@ -87,7 +87,28 @@ public class TestImportBooks {
                 bookCopy.getBook().getTitle().equals("Theoretische Informatik")).collect(Collectors.toList()).size(), 3);
         assertEquals(bookCopyDataBase.getBookCopyDataBase().stream().filter(bookCopy ->
                 bookCopy.getBook().getTitle().equals("I hate school")).collect(Collectors.toList()).size(), 1);
+    }
 
+    @Test
+    public void importCustomer() {
+        final CustomerDataBase customerDataBase = new CustomerDataBase();
+
+        //check data base empty before importing the books
+        assertEquals(customerDataBase.getCustomerDataBase().size(), 0);
+
+        customerDataBase.importCustomers("src\\test\\java\\ressources\\csvFileToTestCustomers");
+
+        //check the number of imported books
+        assertEquals(customerDataBase.getCustomerDataBase().size(), 6);
+
+        // check four first names of the first customers which have been added.
+        assertTrue(customerDataBase.getCustomerDataBase().get(0).getFirstName().equals("Mohamed"));
+        assertTrue(customerDataBase.getCustomerDataBase().get(1).getFirstName().equals("Radu"));
+        assertTrue(customerDataBase.getCustomerDataBase().get(2).getFirstName().equals("Lena"));
+        assertTrue(customerDataBase.getCustomerDataBase().get(3).getFirstName().equals("Anni"));
+
+// Ausgabe aller Kunden
+        customerDataBase.getCustomerDataBase().stream().forEach(System.out::println);
 
     }
 

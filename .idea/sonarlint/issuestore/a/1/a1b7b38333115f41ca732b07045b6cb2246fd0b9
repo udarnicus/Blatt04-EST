@@ -1,0 +1,11 @@
+
+X	java:S106"9Replace this use of System.out or System.err by a logger.(Ú„ê¶úÿÿÿÿ8ï°´¾¥.
+0
+java:S1220""Move this file to a named package.
+G
+java:S1612",Replace this lambda with a method reference.(Ñ‰óõ8ï°´¾¥.
+L
+java:S1612",Replace this lambda with a method reference.(Ú„ê¶úÿÿÿÿ8ï°´¾¥.
+R
+java:S1128"2Remove this unused import 'java.util.Collections'.(¢³ïÓþÿÿÿÿ8ï°´¾¥.
+S	java:S106"9Replace this use of System.out or System.err by a logger.(Ñ‰óõ8ï°´¾¥.

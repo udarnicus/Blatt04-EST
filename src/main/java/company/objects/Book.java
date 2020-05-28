@@ -53,4 +53,17 @@ public class Book {
     public int getEdition() {
         return edition;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", authors=" + authors +
+                ", year='" + year + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", city='" + city + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", edition=" + edition +
+                '}';
+    }
 }

@@ -65,4 +65,17 @@ public class BookCopy{
     public String getLocation() {
         return location;
     }
+
+    @Override
+    public String toString() {
+        return "BookCopy{" +
+                "loanStatus=" + loanStatus +
+                ", currentBorrower=" + currentBorrower +
+                ", loanDate=" + loanDate +
+                ", addedToLibrary=" + addedToLibrary +
+                ", book=" + book +
+                ", id='" + id + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

@@ -43,11 +43,13 @@ public class BookDataBase {
             String line;
             while ((line = csvFileReader.readLine()) != null) {
                 final String[] bookAttributes = line.split(",");
+                //starting at position 6 in each line there are arbitrarily many authors, which are stored in a list
                 final ArrayList<String> authors = new ArrayList<>();
                 for (int i = 6; i < bookAttributes.length; i++) {
                     authors.add(bookAttributes[i]);
                 }
-                final Book book = new Book(bookAttributes[0], authors, bookAttributes[1], bookAttributes[2], bookAttributes[3], bookAttributes[4], Integer.parseInt(bookAttributes[5]));
+                final Book book = new Book(bookAttributes[0], authors, bookAttributes[1], bookAttributes[2],
+                        bookAttributes[3], bookAttributes[4], Integer.parseInt(bookAttributes[5]));
                 //bookDataBase.add(book);
                 this.addBook(book);
 
@@ -67,7 +69,8 @@ public class BookDataBase {
      * @return
      */
     public boolean addBook(Book book) {
-        if (bookDataBase.stream().filter(book1 -> book1.getIsbn().equals(book.getIsbn())).collect(Collectors.toList()).size() == 0) {
+        if (bookDataBase.stream().filter(book1 -> book1.getIsbn().equals(book.getIsbn())).
+                collect(Collectors.toList()).isEmpty()) {
             getBookDataBase().add(book);
             return true;
         }

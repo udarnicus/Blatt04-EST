@@ -1,0 +1,22 @@
+
+Œ
+java:S1319Œ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÇâÇŽûÿÿÿÿ
+’
+java:S1319t"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ó¯Ãèüÿÿÿÿ8»Ðÿ¾¥.
+š
+java:S1319€"wThe type of the "bookDataBase" object should be an interface such as "List" rather than the implementation "ArrayList".(’©ŠÅýÿÿÿÿ8»Ðÿ¾¥.
+L
+java:S1066B"/Merge this if statement with the enclosing one.(öÕéÛ8»Ðÿ¾¥.
+Q
+java:S1066U"/Merge this if statement with the enclosing one.(ïõÙƒüÿÿÿÿ8»Ðÿ¾¥.
+[
+java:S1155B">Use isEmpty() to check whether the collection is empty or not.(öÕéÛ8»Ðÿ¾¥.
+E
+java:S11482"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8»Ðÿ¾¥.
+<
+java:S1700"Rename field "bookCopyDataBase"(ƒé‰¨8»Ðÿ¾¥.
+_
+java:S1128"=Remove this unused import 'java.util.NoSuchElementException'.(®“ÿéúÿÿÿÿ8»Ðÿ¾¥.
+v
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ƒé‰¨8»Ðÿ¾¥.
+]	java:S125"<This block of commented-out lines of code should be removed.(€ÏÍýþÿÿÿÿ8»Ðÿ¾¥.
