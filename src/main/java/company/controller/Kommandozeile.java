@@ -111,6 +111,13 @@ public class Kommandozeile {
     }
 
     /**
+     * Simulates User Input for Testing purposes
+     *
+     */
+    public static void startTestingEnviroment(){
+        initialize();
+    }
+    /**
      * Returns inportant information about the Book Copy
      * <p>
      * User has to input the Book ISBN and the ID of the book Copy
