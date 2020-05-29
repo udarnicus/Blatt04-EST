@@ -80,7 +80,7 @@ public class Kommandozeile {
                 break;
             case 6:
                 String bookCopyID = readBookCopyID();
-                returnBookCopy();
+                returnBookCopy(bookCopyID);
                 break;
             case 7:
                 deleteCustomerFromDatabase();
@@ -127,8 +127,8 @@ public class Kommandozeile {
      * public so it can be tested from outside
      * returns BookCopy so the output can be tested
      */
-    public static BookCopy returnBookCopy() {
-        String bookCopyID = readBookCopyID();
+    public static BookCopy returnBookCopy(String bookCopyID) {
+
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (bookCopy.getId().equals(bookCopyID)) {
                 System.out.println("Book Copy Title: " + bookCopy.getBook().getTitle());

@@ -16,9 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestImportBookCopy {
     @Test
-    public void testImportBookCopy(){
-       String[] args = null;
-       Kommandozeile.main(args);
-       System.out.println("5");
+    public void testReturnOkBookCopy(){
+       Kommandozeile.startTestingEnviroment();
+       assertEquals(Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().get(0), Kommandozeile.returnBookCopy(
+               "111"));
+    }
+
+    @Test
+    public void testNotExistingBookCopy(){
+        Kommandozeile.startTestingEnviroment();
+        assertEquals(null,  Kommandozeile.returnBookCopy(
+                "23232"));
     }
 }
