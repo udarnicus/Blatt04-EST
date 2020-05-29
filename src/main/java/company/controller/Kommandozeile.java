@@ -79,6 +79,7 @@ public class Kommandozeile {
                 System.out.println("Book borrowed succesfully!");
                 break;
             case 6:
+                String bookCopyID = readBookCopyID();
                 returnBookCopy();
                 break;
             case 7:
@@ -113,23 +114,26 @@ public class Kommandozeile {
     /**
      * Returns inportant information about the Book Copy
      * <p>
-     * User has to input the Book ISBN and the ID of the book Copy
+     * User has to input the ID of the book Copy
+     *
+     * public so it can be tested from outside
+     * returns BookCopy so the output can be tested
      */
-    private static void returnBookCopy() {
-        String bookISBN = readBookISBN();
+    public static BookCopy returnBookCopy() {
         String bookCopyID = readBookCopyID();
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
-            if (bookCopy.getBook().getIsbn().equals(bookISBN) && bookCopy.getId().equals(bookCopyID)) {
+            if (bookCopy.getId().equals(bookCopyID)) {
                 System.out.println("Book Copy Title: " + bookCopy.getBook().getTitle());
                 System.out.println("Book Copy ID: " + bookCopy.getId());
                 System.out.println("Book Copy ISBN: " + bookCopy.getBook().getIsbn());
                 System.out.println("Book Copy Loan Status: " + bookCopy.getLoanStatus());
                 System.out.println("Book Copy Location: " + bookCopy.getLocation());
                 System.out.println("Book Copy was added to the library on: " + bookCopy.getAddedToLibrary());
-                return;
+                return bookCopy;
             }
         }
         System.out.println("Book Copy could not be found!");
+        return null;
     }
 
     /**
@@ -278,7 +282,7 @@ public class Kommandozeile {
 
     }
 
-    private static void fillDatabasesWithDummyObjects() {
+    public static void fillDatabasesWithDummyObjects() {
         ArrayList<String> authors = new ArrayList<>();
         authors.add("Goethe");
         Customer customer1 = new Customer("Testing", "Tester", "123456", "Home", "1234", "Stuttgart");
