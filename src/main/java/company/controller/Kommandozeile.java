@@ -92,7 +92,7 @@ public class Kommandozeile {
                 deleteBookCopyFromDatabase();
                 break;
             case 10:
-                System.out.println("Action executed succesfully!");
+                printAllCustomers();
                 break;
             case 11:
                 System.out.println("Action executed succesfully!");
@@ -108,6 +108,18 @@ public class Kommandozeile {
                 break;
 
 
+        }
+    }
+
+    /**
+     * Prints all customers from the database
+     *
+     * No test for the methode possible, only manual test
+     *
+     */
+    private static void printAllCustomers() {
+        for(Customer customer: customerDataBase.getCustomerDataBase()){
+            System.out.println(customer.toString());
         }
     }
 
