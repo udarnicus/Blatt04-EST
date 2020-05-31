@@ -95,7 +95,7 @@ public class Kommandozeile {
                 printAllCustomers();
                 break;
             case 11:
-                System.out.println("Action executed succesfully!");
+                printAllBooks();
                 break;
             case 12:
                 System.out.println("Action executed succesfully!");
@@ -108,6 +108,17 @@ public class Kommandozeile {
                 break;
 
 
+        }
+    }
+
+    /**
+     * Prints all books from the database
+     *
+     * No test for the methode possible, only manual test
+     */
+    private static void printAllBooks() {
+        for(Book book : bookDataBase.getBookDataBase()){
+            System.out.println(book.toString());
         }
     }
 
