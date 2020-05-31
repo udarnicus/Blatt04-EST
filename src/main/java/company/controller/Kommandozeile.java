@@ -131,12 +131,7 @@ public class Kommandozeile {
 
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (bookCopy.getId().equals(bookCopyID)) {
-                System.out.println("Book Copy Title: " + bookCopy.getBook().getTitle());
-                System.out.println("Book Copy ID: " + bookCopy.getId());
-                System.out.println("Book Copy ISBN: " + bookCopy.getBook().getIsbn());
-                System.out.println("Book Copy Loan Status: " + bookCopy.getLoanStatus());
-                System.out.println("Book Copy Location: " + bookCopy.getLocation());
-                System.out.println("Book Copy was added to the library on: " + bookCopy.getAddedToLibrary());
+                System.out.println(bookCopy.toString());
                 return bookCopy;
             }
         }
