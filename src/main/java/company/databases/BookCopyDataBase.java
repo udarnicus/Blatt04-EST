@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+import java.util.Iterator;
 
 /**
- * Reprents the Book Copy DataBase
+ * Represents the Book Copy DataBase
  * <p>
- * All BookCopys are stored here. After creating the the database, it has to be linked to the bookdatabase
+ * All BookCopies are stored here. After creating the the database, it has to be linked to the bookdatabase
  */
 
 public class BookCopyDataBase {

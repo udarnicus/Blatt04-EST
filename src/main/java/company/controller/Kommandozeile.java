@@ -10,6 +10,7 @@ import company.objects.Customer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.Iterator;
 
 public class Kommandozeile {
     private static BookCopyDataBase bookCopyDataBase;
@@ -98,13 +99,13 @@ public class Kommandozeile {
                 printAllBooks();
                 break;
             case 12:
-                System.out.println("Action executed succesfully!");
+                printAllNotBorrowedBookCopies();
                 break;
             case 13:
-                System.out.println("Action executed succesfully!");
+                printAllBorrowedBookCopies();
                 break;
             case 14:
-                System.out.println("Action executed succesfully!");
+                printAllBorrowedBookCopiesOfCustomer();
                 break;
 
 
@@ -114,7 +115,7 @@ public class Kommandozeile {
     /**
      * Prints all books from the database
      *
-     * No test for the methode possible, only manual test
+     * No test for the method possible, only manual test
      */
     private static void printAllBooks() {
         for(Book book : bookDataBase.getBookDataBase()){
@@ -131,6 +132,43 @@ public class Kommandozeile {
     private static void printAllCustomers() {
         for(Customer customer: customerDataBase.getCustomerDataBase()){
             System.out.println(customer.toString());
+        }
+    }
+
+    /**
+     * Prints all not borrowed bookCopies from database
+     */
+    private static void printAllNotBorrowedBookCopies(){
+        ArrayList<BookCopy> notBorrowedBookCopies = new ArrayList<>();
+        for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
+            if (!bookCopyDataBase.bookCopyIsBorrowed(bookCopy))
+                notBorrowedBookCopies.add(bookCopy);
+        }
+        for(int i = 0; i < notBorrowedBookCopies.size(); i++){
+            System.out.println(notBorrowedBookCopies.get(i));
+        }
+    }
+
+    /**
+     * Prints all borrowed bookCopies from database
+     */
+    private static void printAllBorrowedBookCopies(){
+        ArrayList<BookCopy> borrowedBookCopies = new ArrayList<>();
+        for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()){
+            if (bookCopyDataBase.bookCopyIsBorrowed(bookCopy))
+                borrowedBookCopies.add(bookCopy);
+        }
+        for(int j = 0; j < borrowedBookCopies.size(); j++){
+            System.out.println(borrowedBookCopies.get(j));
+        }
+    }
+
+    /**
+     * Prints all borrowed bookCopies of a specific customer
+     */
+    private static void printAllBorrowedBookCopiesOfCustomer(Customer customer) {
+        for(int k = 0; k < customer.getBooksOnLoan().size(); k++){
+            System.out.println(customer.getBooksOnLoan().get(k));
         }
     }
 

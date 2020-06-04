@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Iterator;
 
 /**
  * Represents the Book data base
@@ -159,4 +160,5 @@ public class BookDataBase {
     public ArrayList<Book> getBookDataBase() {
         return bookDataBase;
     }
+
 }
