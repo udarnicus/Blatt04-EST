@@ -1,22 +1,28 @@
-import company.controller.Kommandozeile;
-import company.databases.BookCopyDataBase;
-import company.databases.BookDataBase;
-import company.databases.CustomerDataBase;
 import company.objects.Book;
 import company.objects.BookCopy;
 import company.objects.Customer;
+import company.controller.Kommandozeile;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class TestBorrowBookCopy {
-    Book bookOne = new Book("Test", "Tester", "2020", "123", "Stuttgart", "Testing", 1);
-    BookCopy bookCopy = new BookCopy(bookOne, 123, "Regal 4 Fach 5", new Date());
+    ArrayList<String> authors = new ArrayList<>();
+    Book book = new Book("Test", authors, "2020", "123", "Stuttgart", "Testing", 1);
+    BookCopy bookCopy = new BookCopy(book, "123", "Regal 4 Fach 5", new Date());
+    BookCopy bookCopy2 = new BookCopy(book, "124", "Regal 4 Fach 5", new Date());
+    BookCopy bookCopy3 = new BookCopy(book, "125", "Regal 4 Fach 5", new Date());
+    BookCopy bookCopy4 = new BookCopy(book, "126", "Regal 4 Fach 5", new Date());
+    BookCopy bookCopy5 = new BookCopy(book, "127", "Regal 4 Fach 5", new Date());
+    BookCopy bookCopy6 = new BookCopy(book, "128", "Regal 4 Fach 5", new Date());
     Customer customer = new Customer("Dummy", "Dum", "765", "Dummystreet", "44444", "München");
+    ArrayList<BookCopy> bookCopyDataBase = new ArrayList<>();
+    ArrayList<Book> bookDataBase = new ArrayList<>();
+    ArrayList<Customer> customerDataBase = new ArrayList<>();
 
     /**
      * This test is testing to borrow a book copy
@@ -24,11 +30,12 @@ public class TestBorrowBookCopy {
      * exists.
      */
     @Test
-    public void testBorrowExcistingBookCopy (){
-        custumerDataBase.add(customer);
-        bookDataBase.add(bookOne);
-        bookCopyDataBase.add(bookOne);
-        assertEquals(ture, this.borrowBookCopy(bookOne));
+    public void testBorrowExistingBookCopy (){
+        customerDataBase.add(customer);
+        bookDataBase.add(book);
+        bookCopyDataBase.add(bookCopy);
+        assertEquals(true, Kommandozeile.borrowBookCopy("123", customer));
+
     }
 
     /**
@@ -36,9 +43,9 @@ public class TestBorrowBookCopy {
      * that doesn´t exists. The customer exists.
      */
     @Test
-    public void testBorrowNotExcistingBookCopy (){
+    public void testBorrowNotExistingBookCopy (){
         customerDataBase.add(customer);
-        asssertEquals(false, this.borrowBookCopy(bookOne));
+        assertEquals(false, Kommandozeile.borrowBookCopy("123", customer));
     }
 
     /**
@@ -47,11 +54,11 @@ public class TestBorrowBookCopy {
      */
     @Test
     public void testBorrowBookCopyWithOverdraftFee (){
-        custumerDataBase.add(customer);
-        bookDataBase.add(bookOne);
-        bookCopyDataBase.add(bookOne);
-        customer.setOverdrafFeeStatus(true);
-        assertEquals(false, this.borrowBookCopy(bookOne));
+        customerDataBase.add(customer);
+        bookDataBase.add(book);
+        bookCopyDataBase.add(bookCopy);
+        customer.setOverdraftFeeStatus(true);
+        assertEquals(false, Kommandozeile.borrowBookCopy("123", customer));
 
     }
 
@@ -61,12 +68,17 @@ public class TestBorrowBookCopy {
      */
     @Test
     public void testBorrowBookCopyWithToHighLoanStatus (){
-        custumerDataBase.add(customer);
-        bookDataBase.add(bookOne);
-        bookCopyDataBase.add(bookOne);
-        //mehr als 5 bücher in dieser liste
-        customer.getBooksOnLoan().size()>5;
-        assertEquals(false, this.borrowBookCopy(bookOne));
+        customerDataBase.add(customer);
+        bookDataBase.add(book);
+        bookCopyDataBase.add(bookCopy);
+        ArrayList <BookCopy> booksOnLoan = new ArrayList<>();
+        booksOnLoan.add(bookCopy);
+        booksOnLoan.add(bookCopy2);
+        booksOnLoan.add(bookCopy3);
+        booksOnLoan.add(bookCopy4);
+        booksOnLoan.add(bookCopy5);
+        customer.setBooksOnLoan(booksOnLoan);
+        assertEquals(false, Kommandozeile.borrowBookCopy("128",customer));
 
     }
 
@@ -76,11 +88,11 @@ public class TestBorrowBookCopy {
      */
     @Test
     public void testBorrowBookCopyWithInvalidPaymentStatus (){
-        custumerDataBase.add(customer);
-        bookDataBase.add(bookOne);
-        bookCopyDataBase.add(bookOne);
+        customerDataBase.add(customer);
+        bookDataBase.add(book);
+        bookCopyDataBase.add(bookCopy);
         customer.setPaymentStatus(false);
-        assertEquals(false, this.borrowBookCopy(bookOne));
+        assertEquals(false, Kommandozeile.borrowBookCopy("123", customer));
 
     }
 }

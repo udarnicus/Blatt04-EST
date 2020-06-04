@@ -1,7 +1,6 @@
 package company.databases;
 
 
-import company.objects.Book;
 import company.objects.Customer;
 
 import java.io.BufferedReader;
@@ -92,7 +91,7 @@ public class CustomerDataBase {
      * @return
      */
     private boolean overdrafFeePayed(final Customer customer) {
-        return !customer.hasOverdrafFeeStatus();
+        return !customer.hasOverdraftFeeStatus();
     }
 
     /**

@@ -15,7 +15,7 @@ public class Customer {
     private final String zipCode;
     private final String city;
     private boolean paymentStatus;
-    private boolean overdrafFeeStatus;
+    private boolean overdraftFeeStatus;
     private ArrayList<BookCopy> booksOnLoan = new ArrayList<>();
 
     public Customer(final String firstName, final String lastName, final String clientId, final String address, final String zipCode, final String city){
@@ -23,7 +23,7 @@ public class Customer {
         this.lastName = lastName;
         this.clientId = clientId;
         setPaymentStatus(true);
-        setOverdrafFeeStatus(false);
+        setOverdraftFeeStatus(false);
         this.address = address;
         this.zipCode = zipCode;
         this.city = city;
@@ -69,12 +69,12 @@ public class Customer {
         this.paymentStatus = paymentStatus;
     }
 
-    public boolean hasOverdrafFeeStatus() {
-        return overdrafFeeStatus;
+    public boolean hasOverdraftFeeStatus() {
+        return overdraftFeeStatus;
     }
 
-    public void setOverdrafFeeStatus(boolean overdrafFeeStatus) {
-        this.overdrafFeeStatus = overdrafFeeStatus;
+    public void setOverdraftFeeStatus(boolean overdraftFeeStatus) {
+        this.overdraftFeeStatus = overdraftFeeStatus;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Customer {
                 ", zipCode='" + zipCode + '\'' +
                 ", city='" + city + '\'' +
                 ", paymentStatus=" + paymentStatus +
-                ", overdrafFeeStatus=" + overdrafFeeStatus +
+                ", overdrafFeeStatus=" + overdraftFeeStatus +
                 ", booksOnLoan=" + booksOnLoan +
                 '}';
     }

@@ -57,7 +57,7 @@ public class TestDeleteCustomer {
     public void testCustomerFeesNotPaid() {
         Customer customerFeesNotPaid = new Customer("Dummy", "Object", "00000000", "Straße", "32232", "Stuttgart");
         customerDataBase.addCustomer(customerFeesNotPaid);
-        customerFeesNotPaid.setOverdrafFeeStatus(true);
+        customerFeesNotPaid.setOverdraftFeeStatus(true);
         assertFalse(customerDataBase.deleteCustomer(customerFeesNotPaid));
     }
 
