@@ -77,18 +77,14 @@ public class Kommandozeile {
 
                 break;
             case 5:
-                //hab die bookCopyID2 genannt, weil ich nicht den gleichen namen wie oben verwenden konnte
                 String bookCopyID2 = readBookCopyID();
-                //hier muss ich den Kunden mit der entsprechenden ClientID aufrufen, das würde ich aber
-                // mit der Methode printAllCustomers machen und dann durch diese Liste durchiterieren,
-                // bis ich den customer mit der entsprechenden ID habe
-                Customer customer = readClientID();
+                Customer customer = searchCustomer(readClientID());
                 borrowBookCopy(bookCopyID2, customer);
                 System.out.println("Book borrowed successfully!");
                 break;
             case 6:
-                String bookCopyID = readBookCopyID();
-                returnBookCopy(bookCopyID);
+                String bookCopyID3 = readBookCopyID();
+                returnBookCopy(bookCopyID3);
                 break;
             case 7:
                 deleteCustomerFromDatabase();
@@ -178,30 +174,29 @@ public class Kommandozeile {
      */
 
     public static boolean borrowBookCopy(String bookCopyID, Customer customer) {
-        if(customer.getPaymentStatus()==true && customer.hasOverdraftFeeStatus()==false && customer.getBooksOnLoan().size()< 5) {
-            returnBookCopy(bookCopyID);
-            if (returnBookCopy(bookCopyID) != null) {
-                returnBookCopy(bookCopyID).setCurrentBorrower(customer);
+        if (customer.getPaymentStatus() == true && customer.hasOverdraftFeeStatus() == false && customer.getBooksOnLoan().size() < 5) {
+            searchBookCopy(bookCopyID);
+            if (searchBookCopy(bookCopyID) != null) {
+                searchBookCopy(bookCopyID).setCurrentBorrower(customer);
                 return true;
             } else {
                 return false;
             }
         } else {
-            if(customer.getPaymentStatus()!=true){
+            if (customer.getPaymentStatus() != true) {
                 System.out.println("Your payment status isn´t ok! You can´t borrow a book!");
                 return false;
-            }
-            else if(customer.hasOverdraftFeeStatus()!=false);
+            } else if (customer.hasOverdraftFeeStatus() != false) {
                 System.out.println("You have an overdraft fee staus! You can´t borrow a book!");
-                 return false;
-            }
-            else {
+                return false;
+            } else {
                 System.out.println("You can´t borrow more than 5 books. You must return an other book to borrow this book!");
                 System.out.println("test");
                 return false;
             }
 
         }
+    }
 
 
 
@@ -295,7 +290,19 @@ public class Kommandozeile {
         return scanner.nextLine();
     }
 
-
+    /**
+     * Searches for a Customer
+     */
+    private static Customer searchCustomer (String clientID) {
+        for (Customer customer : customerDataBase.getCustomerDataBase()) {
+            if (customer.getClientId().equals(readClientID())) {
+                System.out.println(customer.toString());
+                return customer;
+            }
+        }
+        System.out.println("Customer could not be found!");
+        return null;
+    }
 
 
     /**
