@@ -29,7 +29,7 @@ public class BookCopy{
         return loanStatus;
     }
 
-    public void setLoanStatus(boolean loanStatus) {
+    public static void setLoanStatus(boolean loanStatus) {
         this.loanStatus = loanStatus;
     }
 
@@ -37,7 +37,7 @@ public class BookCopy{
         return currentBorrower;
     }
 
-    public void setCurrentBorrower(Customer currentBorrower) {
+    public static void setCurrentBorrower(Customer currentBorrower) {
         this.currentBorrower = currentBorrower;
         setLoanStatus(true);
     }
@@ -62,7 +62,7 @@ public class BookCopy{
         return id;
     }
 
-    public String getLocation() {
+    public static String getLocation() {
         return location;
     }
 
@@ -78,4 +78,6 @@ public class BookCopy{
                 ", location='" + location + '\'' +
                 '}';
     }
+
+
 }

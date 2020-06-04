@@ -15,6 +15,7 @@ public class Kommandozeile {
     private static BookCopyDataBase bookCopyDataBase;
     private static BookDataBase bookDataBase;
     private static CustomerDataBase customerDataBase;
+    private static BookCopy BookCopy;
 
     public static void main(String[] args) {
         initialize();
@@ -70,12 +71,12 @@ public class Kommandozeile {
                 System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported successfully");
                 break;
             case 4:
+                searchBookCopy();
                 System.out.println("Action executed succesfully!");
 
                 break;
             case 5:
-                readClientID();
-                readBookISBN();
+                borrowBookCopy();
                 System.out.println("Book borrowed succesfully!");
                 break;
             case 6:
@@ -142,6 +143,70 @@ public class Kommandozeile {
     public static void startTestingEnviroment(){
         initialize();
     }
+
+
+    /**
+     * This method searches for a book copy in our database.
+     * If the book exists the location will be printed.
+     *
+     * @param bookISBN
+     * @return
+     */
+    public static BookCopy searchBookCopy (String bookISBN) {
+        for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
+            bookCopy.getBook();
+            if(bookDataBase.contains(bookISBN)) {
+                return BookCopy;
+                System.out.println("This book ist available in out library at " + BookCopy.getLocation());
+            } else {
+                System.out.println("Unfortunately we don´t have this book");
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * This method let a customer borrow a book.
+     * You must enter the ISBN of the book an the customer
+     * to borrow a book.
+     *  @param bookISBN
+     * @param customer
+     */
+
+    public static boolean borrowBookCopy(String bookISBN, Customer customer) {
+        if(customer.getPaymentStatus()==true && customer.hasOverdrafFeeStatus()==false && customer.getBooksOnLoan().size()<= 5){
+            if(bookDataBase.contains(book.getbookISBN())) {
+                BookCopy.setLoanStatus(true);
+                BookCopy.setCurrentBorrower(customer);
+                //Die Buchkopie, die die ISBN des Buches hat, soll zu der Liste der ausgeliehenen Bücher des
+                //Kundens hinzugefüht werden
+                customer.booksOnLoan.add(bookCopyDataBase.getBookDataBase().getISBN());
+                return true;
+                System.out.println("You borrowed this book successfully!");
+            } else {
+                return false;
+                System.out.println("This book isn´t available at our library!");
+            }
+        } else {
+            if(customer.getPaymentStatus()!=true){
+                return false;
+                System.out.println("Your payment status isn´t ok! You can´t borrow a book!");
+            }
+            if(customer.hasOverdraftFeeStatus()!=false){
+                return false;
+                System.out.println("You have an overdraft fee staus! You can´t borrow a book!");
+            }
+            if(customer.getBooksOnLoan().size()>5){
+                return false;
+                Sytsem.out.println("You can´t borrow more than 5 books. You must return an other book to borrow this book!");
+            }
+
+        }
+
+    }
+
     /**
      * Returns inportant information about the Book Copy
      * <p>
@@ -150,6 +215,8 @@ public class Kommandozeile {
      * public so it can be tested from outside
      * returns BookCopy so the output can be tested
      */
+
+
     public static BookCopy returnBookCopy(String bookCopyID) {
 
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
