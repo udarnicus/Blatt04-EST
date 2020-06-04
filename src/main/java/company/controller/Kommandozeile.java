@@ -139,13 +139,9 @@ public class Kommandozeile {
      * Prints all not borrowed bookCopies from database
      */
     private static void printAllNotBorrowedBookCopies(){
-        ArrayList<BookCopy> notBorrowedBookCopies = new ArrayList<>();
         for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
-            if (!bookCopyDataBase.bookCopyIsBorrowed(bookCopy))
-                notBorrowedBookCopies.add(bookCopy);
-        }
-        for(int i = 0; i < notBorrowedBookCopies.size(); i++){
-            System.out.println(notBorrowedBookCopies.get(i));
+            if (!bookCopy.getLoanStatus())
+                System.out.println(bookCopy);
         }
     }
 
@@ -153,13 +149,9 @@ public class Kommandozeile {
      * Prints all borrowed bookCopies from database
      */
     private static void printAllBorrowedBookCopies(){
-        ArrayList<BookCopy> borrowedBookCopies = new ArrayList<>();
         for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()){
-            if (bookCopyDataBase.bookCopyIsBorrowed(bookCopy))
-                borrowedBookCopies.add(bookCopy);
-        }
-        for(int j = 0; j < borrowedBookCopies.size(); j++){
-            System.out.println(borrowedBookCopies.get(j));
+            if (bookCopy.getLoanStatus())
+                System.out.println(bookCopy);
         }
     }
 
