@@ -245,13 +245,7 @@ public class Kommandozeile {
 
     public static BookCopy returnBookCopy(String bookCopyID) {
 
-        for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
-            if (bookCopy.getId().equals(bookCopyID)) {
-                System.out.println(bookCopy.toString());
-                return bookCopy;
-            }
-        }
-        System.out.println("Book Copy could not be found!");
+        //TODO: Implement
         return null;
     }
 
