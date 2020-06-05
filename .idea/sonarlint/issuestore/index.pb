@@ -9,3 +9,5 @@ c
 3src/main/java/company/controller/Kommandozeile.java,9\c\9c97d75add4b9b5770545a97ec2eb087ed676032
 e
 5src/main/java/company/databases/BookCopyDataBase.java,c\6\c65090c3b3424b16ba2e8656052e8c41b26d1510
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0

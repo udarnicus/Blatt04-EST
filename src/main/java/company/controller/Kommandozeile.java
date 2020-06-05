@@ -78,9 +78,7 @@ public class Kommandozeile {
                 break;
             case 5:
                 String bookCopyID2 = readBookCopyID();
-                Customer customer = searchCustomer(readClientID());
-                borrowBookCopy(bookCopyID2, customer);
-                System.out.println("Book borrowed successfully!");
+                borrowBookCopy(bookCopyID2, readClientID());
                 break;
             case 6:
                 String bookCopyID3 = readBookCopyID();
@@ -121,6 +119,7 @@ public class Kommandozeile {
      * No test for the methode possible, only manual test
      */
     private static void printAllBooks() {
+
         for(Book book : bookDataBase.getBookDataBase()){
             System.out.println(book.toString());
         }
@@ -157,7 +156,6 @@ public class Kommandozeile {
     public static BookCopy searchBookCopy (String bookCopyID) {
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (bookCopy.getId().equals(bookCopyID)) {
-                System.out.println(bookCopy.toString());
                 return bookCopy;
             }
         }
@@ -170,28 +168,33 @@ public class Kommandozeile {
      * If the conditions of the customer aren´t fulfilled
      * it´s not possible to borrow a book.
      *  @param bookCopyID
-     * @param customer
+     * @param customerID
      */
 
-    public static boolean borrowBookCopy(String bookCopyID, Customer customer) {
-        if (customer.getPaymentStatus() == true && customer.hasOverdraftFeeStatus() == false && customer.getBooksOnLoan().size() < 5) {
-            searchBookCopy(bookCopyID);
-            if (searchBookCopy(bookCopyID) != null) {
-                searchBookCopy(bookCopyID).setCurrentBorrower(customer);
+    public static boolean borrowBookCopy(String bookCopyID, String customerID) {
+        Customer customer = searchCustomer(customerID);
+
+        if (customer.getPaymentStatus() && !customer.hasOverdraftFeeStatus()&& customer.getBooksOnLoan().size() < 5) {
+            BookCopy bookCopy = searchBookCopy(bookCopyID);
+            if (bookCopy != null) {
+                bookCopy.setCurrentBorrower(customer);
+                customer.getBooksOnLoan().add(bookCopy);
+                System.out.println("Book borrowed successfully!");
                 return true;
+
             } else {
+                System.out.println("Book could not be borrowed");
                 return false;
             }
         } else {
-            if (customer.getPaymentStatus() != true) {
+            if (!customer.getPaymentStatus()) {
                 System.out.println("Your payment status isn´t ok! You can´t borrow a book!");
                 return false;
-            } else if (customer.hasOverdraftFeeStatus() != false) {
+            } else if (customer.hasOverdraftFeeStatus()) {
                 System.out.println("You have an overdraft fee staus! You can´t borrow a book!");
                 return false;
             } else {
                 System.out.println("You can´t borrow more than 5 books. You must return an other book to borrow this book!");
-                System.out.println("test");
                 return false;
             }
 
@@ -293,14 +296,13 @@ public class Kommandozeile {
     /**
      * Searches for a Customer
      */
-    private static Customer searchCustomer (String clientID) {
+    private static Customer
+    searchCustomer (String clientID) {
         for (Customer customer : customerDataBase.getCustomerDataBase()) {
-            if (customer.getClientId().equals(readClientID())) {
-                System.out.println(customer.toString());
+            if (customer.getClientId().equals(clientID)) {
                 return customer;
             }
         }
-        System.out.println("Customer could not be found!");
         return null;
     }
 
