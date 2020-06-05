@@ -96,7 +96,8 @@ public class Kommandozeile {
                 deleteBookFromDataBase(bookISBN);
                 break;
             case 9:
-                deleteBookCopyFromDatabase();
+                String bookCopyID1 = readBookCopyID();
+                deleteBookCopyFromDataBase(bookCopyID1);
                 break;
             case 10:
                 printAllCustomers();
@@ -278,8 +279,7 @@ public class Kommandozeile {
     /**
      * Delete Book Copy From DataBase
      */
-    private static void deleteBookCopyFromDatabase() {
-        String bookCopyID = readBookCopyID();
+    public static void deleteBookCopyFromDataBase(String bookCopyID) {
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (bookCopy.getId().equals(bookCopyID)) {
                 if (bookCopyDataBase.deleteBookCopy(bookCopy)) {

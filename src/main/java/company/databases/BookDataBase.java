@@ -96,7 +96,8 @@ public class BookDataBase {
                 Mit einer for-Schleife tut es nicht, es wurde immer eine Exception geworfen.
                  */
             ArrayList<BookCopy> bookCopiesToDelete =
-                    (ArrayList<BookCopy>) bookCopyDataBase.stream().filter(bookCopy -> bookCopy.getBook().getISBN().equals(book.getISBN())).collect(Collectors.toList());
+                    (ArrayList<BookCopy>) bookCopyDataBase.stream().filter(bookCopy -> bookCopy.getBook().getISBN().
+                            equals(book.getISBN())).collect(Collectors.toList());
             getBookCopyDataBase().removeAll(bookCopiesToDelete);
             getBookDataBase().remove(book);
             return true;
