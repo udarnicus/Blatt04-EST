@@ -38,7 +38,7 @@ public class BookCopy{
     }
 
     public void setCurrentBorrower(Customer currentBorrower) {
-        this.currentBorrower = currentBorrower;
+        currentBorrower = currentBorrower;
         setLoanStatus(true);
     }
 
@@ -78,4 +78,6 @@ public class BookCopy{
                 ", location='" + location + '\'' +
                 '}';
     }
+
+
 }

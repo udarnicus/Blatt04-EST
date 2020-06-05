@@ -16,6 +16,7 @@ public class Kommandozeile {
     private static BookCopyDataBase bookCopyDataBase;
     private static BookDataBase bookDataBase;
     private static CustomerDataBase customerDataBase;
+    private static BookCopy BookCopy;
 
     public static void main(String[] args) {
         initialize();
@@ -71,17 +72,18 @@ public class Kommandozeile {
                 System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported successfully");
                 break;
             case 4:
-                System.out.println("Action executed succesfully!");
+                String bookCopyID = readBookCopyID();
+                searchBookCopy(bookCopyID);
+                System.out.println("Action executed successfully!");
 
                 break;
             case 5:
-                readClientID();
-                readBookISBN();
-                System.out.println("Book borrowed succesfully!");
+                String bookCopyID2 = readBookCopyID();
+                borrowBookCopy(bookCopyID2, readClientID());
                 break;
             case 6:
-                String bookCopyID = readBookCopyID();
-                returnBookCopy(bookCopyID);
+                String bookCopyID3 = readBookCopyID();
+                returnBookCopy(bookCopyID3);
                 break;
             case 7:
                 deleteCustomerFromDatabase();
@@ -118,6 +120,7 @@ public class Kommandozeile {
      * No test for the method possible, only manual test
      */
     private static void printAllBooks() {
+
         for(Book book : bookDataBase.getBookDataBase()){
             System.out.println(book.toString());
         }
@@ -172,6 +175,64 @@ public class Kommandozeile {
     public static void startTestingEnviroment(){
         initialize();
     }
+
+
+    /**
+     * This method searches for a book copy in our database.
+     * If the book exists the location will be printed.
+     *
+     * @param bookCopyID
+     */
+    public static BookCopy searchBookCopy (String bookCopyID) {
+        for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
+            if (bookCopy.getId().equals(bookCopyID)) {
+                return bookCopy;
+            }
+        }
+        System.out.println("Book Copy could not be found!");
+        return null;
+    }
+
+    /**
+     * This method let a customer borrow a book.
+     * If the conditions of the customer aren´t fulfilled
+     * it´s not possible to borrow a book.
+     *  @param bookCopyID
+     * @param customerID
+     */
+
+    public static boolean borrowBookCopy(String bookCopyID, String customerID) {
+        Customer customer = searchCustomer(customerID);
+
+        if (customer.getPaymentStatus() && !customer.hasOverdraftFeeStatus()&& customer.getBooksOnLoan().size() < 5) {
+            BookCopy bookCopy = searchBookCopy(bookCopyID);
+            if (bookCopy != null) {
+                bookCopy.setCurrentBorrower(customer);
+                customer.getBooksOnLoan().add(bookCopy);
+                System.out.println("Book borrowed successfully!");
+                return true;
+
+            } else {
+                System.out.println("Book could not be borrowed");
+                return false;
+            }
+        } else {
+            if (!customer.getPaymentStatus()) {
+                System.out.println("Your payment status isn´t ok! You can´t borrow a book!");
+                return false;
+            } else if (customer.hasOverdraftFeeStatus()) {
+                System.out.println("You have an overdraft fee staus! You can´t borrow a book!");
+                return false;
+            } else {
+                System.out.println("You can´t borrow more than 5 books. You must return an other book to borrow this book!");
+                return false;
+            }
+
+        }
+    }
+
+
+
     /**
      * Returns inportant information about the Book Copy
      * <p>
@@ -180,6 +241,8 @@ public class Kommandozeile {
      * public so it can be tested from outside
      * returns BookCopy so the output can be tested
      */
+
+
     public static BookCopy returnBookCopy(String bookCopyID) {
 
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
@@ -259,6 +322,20 @@ public class Kommandozeile {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
+
+    /**
+     * Searches for a Customer
+     */
+    private static Customer
+    searchCustomer (String clientID) {
+        for (Customer customer : customerDataBase.getCustomerDataBase()) {
+            if (customer.getClientId().equals(clientID)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Reads CSV file path
