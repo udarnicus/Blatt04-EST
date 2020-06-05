@@ -39,7 +39,7 @@ public class BookCopy{
     }
 
     public void setCurrentBorrower(Customer currentBorrower) {
-        currentBorrower = currentBorrower;
+        this.currentBorrower = currentBorrower;
         setLoanStatus(true);
         setLoanDate(Calendar.getInstance().getTime());
     }
