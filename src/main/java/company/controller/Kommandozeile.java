@@ -73,8 +73,8 @@ public class Kommandozeile {
                 break;
             case 4:
                 String bookCopyID = readBookCopyID();
-                searchBookCopy(bookCopyID);
-                System.out.println("Action executed successfully!");
+                System.out.println(searchBookCopy(bookCopyID));
+
 
                 break;
             case 5:
