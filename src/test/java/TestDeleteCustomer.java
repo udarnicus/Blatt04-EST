@@ -1,8 +1,10 @@
+import company.controller.Kommandozeile;
 import company.databases.CustomerDataBase;
 import company.objects.Book;
 import company.objects.BookCopy;
 import company.objects.Customer;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -23,18 +25,17 @@ public class TestDeleteCustomer {
     CustomerDataBase customerDataBase = new CustomerDataBase();
 
     /**
-     *
      * Here all conditions are fulfilled to delete a customer.
      * Therefore, the system tests whether the customer database
      * no longer contains the element to be deleted
      */
     @Test
     public void testCustomerOk() {
-        //Book bookOk = new Book(titel,autoren, jahr, isbn);
-        Customer customerOK = new Customer("Dummy", "Object", "00000000", "Straße", "32232", "Stuttgart");
-        customerDataBase.addCustomer(customerOK);
-        assertTrue(customerDataBase.deleteCustomer(customerOK));
-        assertFalse(customerDataBase.getCustomerDataBase().contains(customerOK));
+        Kommandozeile.startTestingEnviroment();
+        Kommandozeile.deleteCustomerFromDatabase("123456");
+        assertFalse(Kommandozeile.getCustomerDataBase().getCustomerDataBase().contains(Kommandozeile.searchCustomer(
+                "123456")));
+        assertEquals(Kommandozeile.getCustomerDataBase().getCustomerDataBase().size(), 2);
     }
 
     /**
@@ -44,8 +45,11 @@ public class TestDeleteCustomer {
      */
     @Test
     public void testCustomerInvalid() {
-        Customer customerInvalid = new Customer("Dummy", "Object", "00000000", "Straße", "32232", "Stuttgart");
-        assertFalse(customerDataBase.deleteCustomer(customerInvalid));
+        Kommandozeile.startTestingEnviroment();
+        Kommandozeile.deleteCustomerFromDatabase("1234566327345");
+        assertFalse(Kommandozeile.getCustomerDataBase().getCustomerDataBase().contains(Kommandozeile.searchCustomer(
+                "1234566327345")));
+        assertEquals(Kommandozeile.getCustomerDataBase().getCustomerDataBase().size(), 3);
     }
 
     /**
@@ -55,10 +59,12 @@ public class TestDeleteCustomer {
      */
     @Test
     public void testCustomerFeesNotPaid() {
-        Customer customerFeesNotPaid = new Customer("Dummy", "Object", "00000000", "Straße", "32232", "Stuttgart");
-        customerDataBase.addCustomer(customerFeesNotPaid);
-        customerFeesNotPaid.setOverdraftFeeStatus(true);
-        assertFalse(customerDataBase.deleteCustomer(customerFeesNotPaid));
+        Kommandozeile.startTestingEnviroment();
+        Kommandozeile.getCustomerDataBase().getCustomerDataBase().get(0).setOverdraftFeeStatus(true);
+        Kommandozeile.deleteCustomerFromDatabase("123456");
+        assertTrue(Kommandozeile.getCustomerDataBase().getCustomerDataBase().contains(Kommandozeile.searchCustomer(
+                "123456")));
+        assertEquals(Kommandozeile.getCustomerDataBase().getCustomerDataBase().size(), 3);
     }
 
     /**
@@ -68,18 +74,13 @@ public class TestDeleteCustomer {
      */
     @Test
     public void testCustomerAllBookNotReturned() {
-        Book book = new Book("Dummy", new ArrayList<>(Arrays.asList("Hallo")), "222", "123432", "Stuttgart", "Hueber", 2);
-        Customer customerAllBookNotReturned = new Customer("Dummy", "Object", "00000000", "Straße", "32232", "Stuttgart");
-        customerDataBase.addCustomer(customerAllBookNotReturned);
-        customerAllBookNotReturned.setBooksOnLoan(new ArrayList<>(Arrays.asList(new BookCopy(book, "001", "1. Stock", new Date()))));
-        assertFalse(customerDataBase.deleteCustomer(customerAllBookNotReturned));
+        Kommandozeile.startTestingEnviroment();
+        Customer customer = Kommandozeile.getCustomerDataBase().getCustomerDataBase().get(0);
+        customer.getBooksOnLoan().add(Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().get(0));
+          Kommandozeile.deleteCustomerFromDatabase("123456");
+        assertTrue(Kommandozeile.getCustomerDataBase().getCustomerDataBase().contains(Kommandozeile.searchCustomer(
+                "123456")));
+        assertEquals(Kommandozeile.getCustomerDataBase().getCustomerDataBase().size(), 3);
     }
-
-    @Test
-    public void testCustomerIsNull(){
-        Customer customer = null;
-        assertFalse(customerDataBase.deleteCustomer(customer));
-    }
-
 
 }

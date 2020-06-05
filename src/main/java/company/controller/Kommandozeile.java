@@ -16,11 +16,11 @@ public class Kommandozeile {
     private static BookCopyDataBase bookCopyDataBase;
     private static BookDataBase bookDataBase;
     private static CustomerDataBase customerDataBase;
-    private static BookCopy BookCopy;
 
     public static void main(String[] args) {
         initialize();
         scanForInput();
+
     }
 
     /**
@@ -57,19 +57,22 @@ public class Kommandozeile {
                 String csvFilePathBooks = readCSVFilePath();
                 bookDataBase.importBooks(csvFilePathBooks);
                 // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
-                System.out.println(bookDataBase.getBookDataBase().size() - 3 + " books have been imported successfully");
+                System.out.println(bookDataBase.getBookDataBase().size() - 3 + " books have been imported " +
+                        "successfully");
                 break;
             case 2:
                 String csvFilePathBookCopies = readCSVFilePath();
                 bookCopyDataBase.importBookCopies(csvFilePathBookCopies);
                 // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
-                System.out.println(bookCopyDataBase.getBookCopyDataBase().size() - 3 + " book copies have been imported successfully");
+                System.out.println(bookCopyDataBase.getBookCopyDataBase().size() - 3 + " book copies have been " +
+                        "imported successfully");
                 break;
             case 3:
                 String csvFilePathCustomers = readCSVFilePath();
                 customerDataBase.importCustomers(csvFilePathCustomers);
                 // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
-                System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported successfully");
+                System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported" +
+                        " successfully");
                 break;
             case 4:
                 String bookCopyID = readBookCopyID();
@@ -86,7 +89,8 @@ public class Kommandozeile {
                 returnBookCopy(bookCopyID3);
                 break;
             case 7:
-                deleteCustomerFromDatabase();
+                String customerID = readClientID();
+                deleteCustomerFromDatabase(customerID);
                 break;
             case 8:
                 deleteBookFromDataBase();
@@ -107,7 +111,7 @@ public class Kommandozeile {
                 printAllBorrowedBookCopies();
                 break;
             case 14:
-                printAllBorrowedBookCopiesOfCustomer();
+                printAllBorrowedBookCopiesOfCustomer(customerDataBase.getCustomerDataBase().get(0));
                 break;
 
 
@@ -116,24 +120,23 @@ public class Kommandozeile {
 
     /**
      * Prints all books from the database
-     *
+     * <p>
      * No test for the method possible, only manual test
      */
     private static void printAllBooks() {
 
-        for(Book book : bookDataBase.getBookDataBase()){
+        for (Book book : bookDataBase.getBookDataBase()) {
             System.out.println(book.toString());
         }
     }
 
     /**
      * Prints all customers from the database
-     *
+     * <p>
      * No test for the methode possible, only manual test
-     *
      */
     private static void printAllCustomers() {
-        for(Customer customer: customerDataBase.getCustomerDataBase()){
+        for (Customer customer : customerDataBase.getCustomerDataBase()) {
             System.out.println(customer.toString());
         }
     }
@@ -141,8 +144,8 @@ public class Kommandozeile {
     /**
      * Prints all not borrowed bookCopies from database
      */
-    private static void printAllNotBorrowedBookCopies(){
-        for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
+    private static void printAllNotBorrowedBookCopies() {
+        for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (!bookCopy.getLoanStatus())
                 System.out.println(bookCopy);
         }
@@ -151,8 +154,8 @@ public class Kommandozeile {
     /**
      * Prints all borrowed bookCopies from database
      */
-    private static void printAllBorrowedBookCopies(){
-        for(BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()){
+    private static void printAllBorrowedBookCopies() {
+        for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (bookCopy.getLoanStatus())
                 System.out.println(bookCopy);
         }
@@ -162,17 +165,17 @@ public class Kommandozeile {
      * Prints all borrowed bookCopies of a specific customer
      */
     private static void printAllBorrowedBookCopiesOfCustomer(Customer customer) {
-        for(int k = 0; k < customer.getBooksOnLoan().size(); k++){
+        for (int k = 0; k < customer.getBooksOnLoan().size(); k++) {
             System.out.println(customer.getBooksOnLoan().get(k));
         }
     }
 
     /**
      * Simulates User Input for Testing purposes
-     *
+     * <p>
      * Doesnt start user input so that the test doesnt freeze
      */
-    public static void startTestingEnviroment(){
+    public static void startTestingEnviroment() {
         initialize();
     }
 
@@ -183,7 +186,7 @@ public class Kommandozeile {
      *
      * @param bookCopyID
      */
-    public static BookCopy searchBookCopy (String bookCopyID) {
+    public static BookCopy searchBookCopy(String bookCopyID) {
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
             if (bookCopy.getId().equals(bookCopyID)) {
                 return bookCopy;
@@ -197,14 +200,15 @@ public class Kommandozeile {
      * This method let a customer borrow a book.
      * If the conditions of the customer aren´t fulfilled
      * it´s not possible to borrow a book.
-     *  @param bookCopyID
+     *
+     * @param bookCopyID
      * @param customerID
      */
 
     public static boolean borrowBookCopy(String bookCopyID, String customerID) {
         Customer customer = searchCustomer(customerID);
 
-        if (customer.getPaymentStatus() && !customer.hasOverdraftFeeStatus()&& customer.getBooksOnLoan().size() < 5) {
+        if (customer.getPaymentStatus() && !customer.hasOverdraftFeeStatus() && customer.getBooksOnLoan().size() < 5) {
             BookCopy bookCopy = searchBookCopy(bookCopyID);
             if (bookCopy != null) {
                 bookCopy.setCurrentBorrower(customer);
@@ -224,7 +228,8 @@ public class Kommandozeile {
                 System.out.println("You have an overdraft fee staus! You can´t borrow a book!");
                 return false;
             } else {
-                System.out.println("You can´t borrow more than 5 books. You must return an other book to borrow this book!");
+                System.out.println("You can´t borrow more than 5 books. You must return an other book to borrow this " +
+                        "book!");
                 return false;
             }
 
@@ -232,12 +237,11 @@ public class Kommandozeile {
     }
 
 
-
     /**
      * Returns inportant information about the Book Copy
      * <p>
      * User has to input the ID of the book Copy
-     *
+     * <p>
      * public so it can be tested from outside
      * returns BookCopy so the output can be tested
      */
@@ -245,7 +249,13 @@ public class Kommandozeile {
 
     public static BookCopy returnBookCopy(String bookCopyID) {
 
-        //TODO: Implement
+        for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
+            if (bookCopy.getId().equals(bookCopyID)) {
+                System.out.println(bookCopy.toString());
+                return bookCopy;
+            }
+        }
+        System.out.println("Book Copy could not be found!");
         return null;
     }
 
@@ -292,20 +302,17 @@ public class Kommandozeile {
     /**
      * Deletes Customer from Database
      */
-    private static void deleteCustomerFromDatabase() {
-        String customerID = readClientID();
-        for (Customer customer : customerDataBase.getCustomerDataBase()) {
-            if (customer.getClientId().equals(customerID)) {
-                if (customerDataBase.deleteCustomer(customer)) {
-                    System.out.println("Customer deleted succesfully!");
-                    return;
-                } else {
-                    System.out.println("Customer could not be deleted!");
-                    return;
-                }
+    public static void deleteCustomerFromDatabase(String customerID) {
+        Customer customerToDelete = searchCustomer(customerID);
+        if (customerToDelete != null) {
+            if (customerDataBase.deleteCustomer(customerToDelete)) {
+                System.out.println("Customer deleted succesfully!");
+            } else {
+                System.out.println("Customer could not be deleted!");
             }
+        } else {
+            System.out.println("Customer does not exist");
         }
-        System.out.println("Customer could not be found");
     }
 
     /**
@@ -320,8 +327,8 @@ public class Kommandozeile {
     /**
      * Searches for a Customer
      */
-    private static Customer
-    searchCustomer (String clientID) {
+    public static Customer
+    searchCustomer(String clientID) {
         for (Customer customer : customerDataBase.getCustomerDataBase()) {
             if (customer.getClientId().equals(clientID)) {
                 return customer;
@@ -412,17 +419,18 @@ public class Kommandozeile {
     public static void fillDatabasesWithDummyObjects() {
         ArrayList<String> authors = new ArrayList<>();
         authors.add("Goethe");
+
+
         Customer customer1 = new Customer("Testing", "Tester", "123456", "Home", "1234", "Stuttgart");
-        Book Book1 = new Book("Test", authors, "2020", "123", "Stuttgart", "TestingTesterWriter", 1);
-        BookCopy BookCopy1 = new BookCopy(Book1, "111", "Regal 1 Fach 2", new Date());
-
         Customer customer2 = new Customer("Max", "Mustermann", "123457", "Sesame Street", "70763", "Mannheim");
-        Book Book2 = new Book("Faust", authors, "1999", "124", "Stuttgart", "UNISTUTTGART", 5);
-        BookCopy BookCopy2 = new BookCopy(Book2, "110", "Regal 1 Fach 2", new Date());
-
         Customer customer3 = new Customer("Bob", "Rob", "123458", "Brodway", "223233", "Hollywood");
+
+        Book Book1 = new Book("Test", authors, "2020", "123", "Stuttgart", "TestingTesterWriter", 1);
+        Book Book2 = new Book("Faust", authors, "1999", "124", "Stuttgart", "UNISTUTTGART", 5);
         Book Book3 = new Book("Java für Dummies", authors, "2020", "125", "Stuttgart", "TestingTesterWriter",
                 1);
+        BookCopy BookCopy1 = new BookCopy(Book1, "111", "Regal 1 Fach 2", new Date());
+        BookCopy BookCopy2 = new BookCopy(Book2, "110", "Regal 1 Fach 2", new Date());
         BookCopy BookCopy3 = new BookCopy(Book3, "2", "Regal 1 Fach 2", new Date());
 
         customerDataBase.addCustomer(customer1);

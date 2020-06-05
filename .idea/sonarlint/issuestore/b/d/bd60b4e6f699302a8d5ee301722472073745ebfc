@@ -1,7 +1,7 @@
 
 Š
-java:S4165)"mRemove this useless assignment; "currentBorrower" already holds the assigned value along all execution paths.(í¬Ü8ÖØ™¨.
+java:S4165*"mRemove this useless assignment; "currentBorrower" already holds the assigned value along all execution paths.(í¬Ü8œüÇ¢¨.
 `
-java:S1854)"CRemove this useless assignment to local variable "currentBorrower".(í¬Ü8ÖØ™¨.
+java:S1854*"CRemove this useless assignment to local variable "currentBorrower".(í¬Ü8œüÇ¢¨.
 L
-java:S1656)"/Remove or correct this useless self-assignment.(í¬Ü8ÖØ™¨.
+java:S1656*"/Remove or correct this useless self-assignment.(í¬Ü8œüÇ¢¨.

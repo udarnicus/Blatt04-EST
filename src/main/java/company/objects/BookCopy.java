@@ -1,5 +1,6 @@
 package company.objects;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -40,6 +41,7 @@ public class BookCopy{
     public void setCurrentBorrower(Customer currentBorrower) {
         currentBorrower = currentBorrower;
         setLoanStatus(true);
+        setLoanDate(Calendar.getInstance().getTime());
     }
 
     public Date getLoanDate() {

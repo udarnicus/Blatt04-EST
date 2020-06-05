@@ -11,3 +11,11 @@ e
 5src/main/java/company/databases/BookCopyDataBase.java,c\6\c65090c3b3424b16ba2e8656052e8c41b26d1510
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+U
+%src/test/java/TestDeleteBookCopy.java,e\2\e2dd33c51d9f727c904af47e215238d16a22a0db
+U
+%src/test/java/TestReturnBookCopy.java,9\c\9cf1b0b625ca3d64216640aefedb1befa5bb8228
+Q
+!src/test/java/TestDeleteBook.java,7\3\732ffd33a9725568b2068969cdb206e0a0943fd7
+[
++src/main/java/company/objects/Customer.java,6\d\6dfba23e6673d81241f98e75f498d5eac7396e6a

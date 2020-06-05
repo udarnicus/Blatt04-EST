@@ -1,22 +1,24 @@
 
-Œ
-java:S1319Œ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÇâÇûÿÿÿÿ
 ’
-java:S1319t"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ó¯Ãèüÿÿÿÿ8»Ğÿ¾¥.
-š
-java:S1319€"wThe type of the "bookDataBase" object should be an interface such as "List" rather than the implementation "ArrayList".(’©ŠÅıÿÿÿÿ8»Ğÿ¾¥.
+java:S1319u"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ó¯Ãèüÿÿÿÿ8»Ğÿ¾¥.
 L
-java:S1066B"/Merge this if statement with the enclosing one.(öÕéÛ8»Ğÿ¾¥.
-Q
-java:S1066U"/Merge this if statement with the enclosing one.(ïõÙƒüÿÿÿÿ8»Ğÿ¾¥.
-[
-java:S1155B">Use isEmpty() to check whether the collection is empty or not.(öÕéÛ8»Ğÿ¾¥.
+java:S1066C"/Merge this if statement with the enclosing one.(öÕéÛ8»Ğÿ¾¥.
+š
+java:S1319"wThe type of the "bookDataBase" object should be an interface such as "List" rather than the implementation "ArrayList".(’©ŠÅıÿÿÿÿ8»Ğÿ¾¥.
 E
-java:S11482"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8»Ğÿ¾¥.
-<
-java:S1700"Rename field "bookCopyDataBase"(ƒé‰¨8»Ğÿ¾¥.
+java:S11483"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8»Ğÿ¾¥.
+[
+java:S1155C">Use isEmpty() to check whether the collection is empty or not.(öÕéÛ8»Ğÿ¾¥.
 _
 java:S1128"=Remove this unused import 'java.util.NoSuchElementException'.(®“ÿéúÿÿÿÿ8»Ğÿ¾¥.
 v
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ƒé‰¨8»Ğÿ¾¥.
-]	java:S125"<This block of commented-out lines of code should be removed.(€ÏÍışÿÿÿÿ8»Ğÿ¾¥.
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ƒé‰¨8ŸÚÅÕ¥.
+<
+java:S1700"Rename field "bookCopyDataBase"(ƒé‰¨8»Ğÿ¾¥.
+Q
+java:S1066V"/Merge this if statement with the enclosing one.(ïõÙƒüÿÿÿÿ8»Ğÿ¾¥.
+Œ
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÇâÇûÿÿÿÿ
+]	java:S125"<This block of commented-out lines of code should be removed.(€ÏÍışÿÿÿÿ8»Ğÿ¾¥.
+L
+java:S1128"/Remove this unused import 'java.util.Iterator'.(¥ÍòÕ8‘§Ã¢¨.
