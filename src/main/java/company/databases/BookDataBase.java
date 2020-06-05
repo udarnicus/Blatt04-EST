@@ -1,6 +1,7 @@
 package company.databases;
 
 
+import company.controller.Kommandozeile;
 import company.objects.Book;
 import company.objects.BookCopy;
 
@@ -9,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.Iterator;
 
 /**
  * Represents the Book data base
@@ -21,7 +21,6 @@ import java.util.Iterator;
 public class BookDataBase {
     private final ArrayList<Book> bookDataBase = new ArrayList<>();
     private ArrayList<BookCopy> bookCopyDataBase;
-
 
 
     /**
@@ -71,7 +70,7 @@ public class BookDataBase {
      * @return
      */
     public boolean addBook(Book book) {
-        if (bookDataBase.stream().filter(book1 -> book1.getIsbn().equals(book.getIsbn())).
+        if (bookDataBase.stream().filter(book1 -> book1.getISBN().equals(book.getISBN())).
                 collect(Collectors.toList()).isEmpty()) {
             getBookDataBase().add(book);
             return true;
@@ -91,16 +90,18 @@ public class BookDataBase {
      */
 
     public boolean deleteBook(Book book) {
-        if (getBookDataBase().contains(book)) {
-            if (checkBookCopyNotBorrowed(book)) {
+
+        if (checkBookCopyNotBorrowed(book)) {
                 /*Dies habe ich hinzugefügt, damit alle Buchkopien gelöscht werden, nachdem das Buch gelöscht wurde.
                 Mit einer for-Schleife tut es nicht, es wurde immer eine Exception geworfen.
                  */
-                bookCopyDataBase = (ArrayList<BookCopy>) bookCopyDataBase.stream().filter(bookCopy -> !bookCopy.getBook().equals(book)).collect(Collectors.toList());
-                getBookDataBase().remove(book);
-                return true;
-            }
+            ArrayList<BookCopy> bookCopiesToDelete =
+                    (ArrayList<BookCopy>) bookCopyDataBase.stream().filter(bookCopy -> bookCopy.getBook().getISBN().equals(book.getISBN())).collect(Collectors.toList());
+            getBookCopyDataBase().removeAll(bookCopiesToDelete);
+            getBookDataBase().remove(book);
+            return true;
         }
+
         return false;
 
     }
@@ -116,7 +117,7 @@ public class BookDataBase {
      */
     private boolean checkBookCopyNotBorrowed(Book book) {
         for (BookCopy bookCopy : bookCopyDataBase) {
-            if (book.equals(bookCopy.getBook())) {
+            if (book.getISBN().equals(bookCopy.getBook().getISBN())) {
                 if (bookCopy.getLoanStatus()) {
                     return false;
                 }

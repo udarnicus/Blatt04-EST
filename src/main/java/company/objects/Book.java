@@ -38,7 +38,7 @@ public class Book {
         return year;
     }
 
-    public String getIsbn() {
+    public String getISBN() {
         return isbn;
     }
 

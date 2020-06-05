@@ -10,7 +10,6 @@ import company.objects.Customer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.Iterator;
 
 public class Kommandozeile {
     private static BookCopyDataBase bookCopyDataBase;
@@ -93,7 +92,8 @@ public class Kommandozeile {
                 deleteCustomerFromDatabase(customerID);
                 break;
             case 8:
-                deleteBookFromDataBase();
+                String bookISBN = readBookISBN();
+                deleteBookFromDataBase(bookISBN);
                 break;
             case 9:
                 deleteBookCopyFromDatabase();
@@ -197,6 +197,22 @@ public class Kommandozeile {
     }
 
     /**
+     * This method searches for a book  in our database.
+     * If the book exists the location will be printed.
+     *
+     * @param bookISBN
+     */
+    public static Book searchBook(String bookISBN) {
+        for (Book book : bookDataBase.getBookDataBase()) {
+            if (book.getISBN().equals(bookISBN)) {
+                return book;
+            }
+        }
+        System.out.println("Book could not be found!");
+        return null;
+    }
+
+    /**
      * This method let a customer borrow a book.
      * If the conditions of the customer aren´t fulfilled
      * it´s not possible to borrow a book.
@@ -282,21 +298,17 @@ public class Kommandozeile {
     /**
      * Deletes Book From Database
      */
-    private static void deleteBookFromDataBase() {
-        String bookISBN = readBookISBN();
-        for (Book book : bookDataBase.getBookDataBase()) {
-            if (book.getIsbn().equals(bookISBN)) {
-                if (bookDataBase.deleteBook(book)) {
-                    System.out.println("Book deleted succesfully!");
-                    return;
-                } else {
-                    System.out.println("Book could not be deleted!");
-                    return;
-                }
+    public static void deleteBookFromDataBase(final String bookISBN) {
+        final Book bookToDelete = searchBook(bookISBN);
+        if (bookToDelete != null) {
+            if (bookDataBase.deleteBook(bookToDelete)) {
+                System.out.println("Book deleted successfully!");
+            } else {
+                System.out.println("Book could not be deleted!");
             }
-
+        } else {
+            System.out.println("Book could not be found");
         }
-        System.out.println("Book could not be found");
     }
 
     /**

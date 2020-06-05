@@ -1,15 +1,15 @@
 
+import company.controller.Kommandozeile;
 import company.databases.BookDataBase;
 import company.objects.Book;
 import company.objects.BookCopy;
 import company.objects.Customer;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-
 
 
 /**
@@ -23,40 +23,38 @@ import java.util.Date;
  */
 
 public class TestDeleteBook {
-    BookDataBase bookDataBase = new BookDataBase();
-
-    ArrayList<String> authors = new ArrayList<>();
-    Customer customer = new Customer("Testing", "Tester", "123456", "Home", "1234", "Stuttgart");
-    Book borrowedBook = new Book( "Test", authors, "2020", "123","Stuttgart", "TestingTesterWriter", 1);
-    BookCopy borrowedBookCopy = new BookCopy(borrowedBook, "111", "Regal 1 Fach 2", new Date());
-    ArrayList<BookCopy> bookCopyDataBase = new ArrayList<>();
-
     /**
      * This method tests to delete book with a borrowed book
      * copy. It is not possible to delete a book
      * without all book copies are available at the library.
      */
     @Test
-    public void testDeleteBorrowedBook(){
-        bookDataBase.addBook(borrowedBook);
-        borrowedBookCopy.setCurrentBorrower(customer);
-        bookCopyDataBase.add(borrowedBookCopy);
-        bookDataBase.setBookCopyDataBase(bookCopyDataBase);
-        assertFalse(bookDataBase.deleteBook(borrowedBook));
-        assertTrue(bookDataBase.getBookCopyDataBase().contains(borrowedBookCopy));
+    public void testDeleteBorrowedBook() {
+        Kommandozeile.startTestingEnviroment();
+        Customer customer = Kommandozeile.getCustomerDataBase().getCustomerDataBase().get(0);
+        Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().get(0).setCurrentBorrower(customer);
+        Kommandozeile.deleteBookFromDataBase("123");
+        assertEquals(Kommandozeile.getBookDataBase().getBookDataBase().size(), 3);
+        assertTrue(Kommandozeile.getBookDataBase().getBookDataBase().contains(Kommandozeile.searchBook("123")));
+        assertTrue(Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().contains(Kommandozeile.searchBookCopy(
+                "111")));
     }
 
     /**
      * All conditions are fulfilled to delete a book.
      * This method tests to delete a book. All book
      * copies are in the library. No one is borrowed.
+     * All book copies must be deleted after this book
+     * has been deleted
      */
     @Test
-    public void testDeleteNotBorrowedBook(){
-        bookDataBase.addBook(borrowedBook);
-        bookCopyDataBase.add(borrowedBookCopy);
-        bookDataBase.setBookCopyDataBase(bookCopyDataBase);
-        assertTrue(bookDataBase.deleteBook(borrowedBook));
+    public void testDeleteNotBorrowedBook() {
+        Kommandozeile.startTestingEnviroment();
+        Kommandozeile.deleteBookFromDataBase("123");
+        assertEquals(Kommandozeile.getBookDataBase().getBookDataBase().size(), 2);
+        assertFalse(Kommandozeile.getBookDataBase().getBookDataBase().contains(Kommandozeile.searchBook("123")));
+        assertFalse(Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().contains(Kommandozeile.searchBookCopy(
+                "111")));
     }
 
     /**
@@ -65,8 +63,12 @@ public class TestDeleteBook {
      * base. It is not able to delete the book.
      */
     @Test
-    public void testDeleteNotExcistingBook(){
-        assertFalse(bookDataBase.deleteBook(borrowedBook));
+    public void testDeleteNotExcistingBook() {
+        Kommandozeile.startTestingEnviroment();
+        assertFalse(Kommandozeile.getBookDataBase().getBookDataBase().contains(Kommandozeile.searchBook("12222223")));
+        Kommandozeile.deleteBookFromDataBase("12222223");
+        assertEquals(Kommandozeile.getBookDataBase().getBookDataBase().size(), 3);
+
     }
 
     /**
@@ -77,14 +79,17 @@ public class TestDeleteBook {
      * book copy is borrowed.
      */
     @Test
-    public void testDeleteNotAllBookCopiesBorrowed(){
-        bookDataBase.addBook(borrowedBook);
-        BookCopy thisIsBorrowed = new BookCopy(borrowedBook, "333", " Regal 3 Fach 6", new Date());
-        BookCopy thisIsNotBorrowed =new BookCopy(borrowedBook, "334", "Regal 3 Fach 7", new Date());
-        thisIsBorrowed.setCurrentBorrower(customer);
-        bookCopyDataBase.add(thisIsBorrowed);
-        bookCopyDataBase.add(thisIsNotBorrowed);
-        bookDataBase.setBookCopyDataBase(bookCopyDataBase);
-        assertFalse(bookDataBase.deleteBook(borrowedBook));
+    public void testDeleteNotAllBookCopiesBorrowed() {
+        Kommandozeile.startTestingEnviroment();
+        Customer customer = Kommandozeile.getCustomerDataBase().getCustomerDataBase().get(0);
+        Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().get(0).setCurrentBorrower(customer);
+        Kommandozeile.deleteBookFromDataBase("123");
+        assertEquals(Kommandozeile.getBookDataBase().getBookDataBase().size(), 3);
+        assertTrue(Kommandozeile.getBookDataBase().getBookDataBase().contains(Kommandozeile.searchBook("123")));
+        assertTrue(Kommandozeile.getBookCopyDataBase().getBookCopyDataBase().contains(Kommandozeile.searchBookCopy(
+                "111")));
+
+
     }
 }
+
