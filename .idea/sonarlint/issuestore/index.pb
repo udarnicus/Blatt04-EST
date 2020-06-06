@@ -25,3 +25,5 @@ U
 %src/test/java/TestReturnBookCopy.java,9\c\9cf1b0b625ca3d64216640aefedb1befa5bb8228
 [
 +src/main/java/company/objects/Customer.java,6\d\6dfba23e6673d81241f98e75f498d5eac7396e6a
+U
+%src/test/java/TestBorrowBookCopy.java,a\8\a8826b6a054c00ffaeed1a307585e5785ecca95f

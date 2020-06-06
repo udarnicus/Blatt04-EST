@@ -293,7 +293,7 @@ public class Kommandozeile {
     }
 
     /**
-     * Delete Book Copy From DataBase
+     * Deletes Book Copy From DataBase
      */
     public static void deleteBookCopyFromDataBase(String bookCopyID) {
         for (BookCopy bookCopy : bookCopyDataBase.getBookCopyDataBase()) {
@@ -431,6 +431,9 @@ public class Kommandozeile {
         System.out.println("14. Print all borrowed book copies of customer");
     }
 
+    /**
+     * Creates three Databases when the programm is starting
+     */
     private static void initialize() {
         customerDataBase = new CustomerDataBase();
         bookDataBase = new BookDataBase();
@@ -444,6 +447,10 @@ public class Kommandozeile {
 
     }
 
+    /**
+     * Creates Dummy Objects in every database so manual testing is possible
+     *
+     */
     public static void fillDatabasesWithDummyObjects() {
         ArrayList<String> authors = new ArrayList<>();
         authors.add("Goethe");
@@ -474,13 +481,29 @@ public class Kommandozeile {
         bookCopyDataBase.addBookCopy(BookCopy3);
     }
 
+    /**
+     * Returns the BookCopyDataBase created for the program
+     *
+     * @return
+     */
     public static BookCopyDataBase getBookCopyDataBase() {
         return bookCopyDataBase;
     }
 
+    /**
+     * Returns the BookDataBase created for the program
+     *
+     * @return
+     */
     public static BookDataBase getBookDataBase() {
         return bookDataBase;
     }
+
+    /**
+     * Returns the CustomerDataBase created for the program
+     *
+     * @return
+     */
 
     public static CustomerDataBase getCustomerDataBase() {
         return customerDataBase;
