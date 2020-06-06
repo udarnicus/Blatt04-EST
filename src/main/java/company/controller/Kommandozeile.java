@@ -30,92 +30,94 @@ public class Kommandozeile {
 
     // test 2
     private static void scanForInput() {
-        String userInput = "";
-        boolean userInputOK = false;
+        while(true) {
+            String userInput = "";
+            boolean userInputOK = false;
 
 
-        while (!userInputOK) {
-            userInput = getUserInput();
+            while (!userInputOK) {
+                userInput = getUserInput();
 
-            try {
-                Integer.parseInt(userInput);
-                if (Integer.parseInt(userInput) < 15 && Integer.parseInt(userInput) > 0) {
-                    userInputOK = true;
-                } else {
+                try {
+                    Integer.parseInt(userInput);
+                    if (Integer.parseInt(userInput) < 15 && Integer.parseInt(userInput) > 0) {
+                        userInputOK = true;
+                    } else {
+                        System.out.println("Wrong input, please insert number from 1-14");
+                    }
+                } catch (NumberFormatException nfe) {
                     System.out.println("Wrong input, please insert number from 1-14");
+
                 }
-            } catch (NumberFormatException nfe) {
-                System.out.println("Wrong input, please insert number from 1-14");
+            }
+
+
+            switch (Integer.parseInt(userInput)) {
+                case 1:
+                    String csvFilePathBooks = readCSVFilePath();
+                    bookDataBase.importBooks(csvFilePathBooks);
+                    // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
+                    System.out.println(bookDataBase.getBookDataBase().size() - 3 + " books have been imported " +
+                            "successfully");
+                    break;
+                case 2:
+                    String csvFilePathBookCopies = readCSVFilePath();
+                    bookCopyDataBase.importBookCopies(csvFilePathBookCopies);
+                    // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
+                    System.out.println(bookCopyDataBase.getBookCopyDataBase().size() - 3 + " book copies have been " +
+                            "imported successfully");
+                    break;
+                case 3:
+                    String csvFilePathCustomers = readCSVFilePath();
+                    customerDataBase.importCustomers(csvFilePathCustomers);
+                    // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
+                    System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported" +
+                            " successfully");
+                    break;
+                case 4:
+                    String bookCopyID = readBookCopyID();
+                    System.out.println(searchBookCopy(bookCopyID));
+
+
+                    break;
+                case 5:
+                    String bookCopyID2 = readBookCopyID();
+                    borrowBookCopy(bookCopyID2, readClientID());
+                    break;
+                case 6:
+                    String bookCopyID3 = readBookCopyID();
+                    returnBookCopy(bookCopyID3);
+                    break;
+                case 7:
+                    String customerID = readClientID();
+                    deleteCustomerFromDatabase(customerID);
+                    break;
+                case 8:
+                    String bookISBN = readBookISBN();
+                    deleteBookFromDataBase(bookISBN);
+                    break;
+                case 9:
+                    String bookCopyID1 = readBookCopyID();
+                    deleteBookCopyFromDataBase(bookCopyID1);
+                    break;
+                case 10:
+                    printAllCustomers();
+                    break;
+                case 11:
+                    printAllBooks();
+                    break;
+                case 12:
+                    printAllNotBorrowedBookCopies();
+                    break;
+                case 13:
+                    printAllBorrowedBookCopies();
+                    break;
+                case 14:
+                    printAllBorrowedBookCopiesOfCustomer(customerDataBase.getCustomerDataBase().get(0));
+                    break;
+
 
             }
-        }
-
-
-        switch (Integer.parseInt(userInput)) {
-            case 1:
-                String csvFilePathBooks = readCSVFilePath();
-                bookDataBase.importBooks(csvFilePathBooks);
-                // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
-                System.out.println(bookDataBase.getBookDataBase().size() - 3 + " books have been imported " +
-                        "successfully");
-                break;
-            case 2:
-                String csvFilePathBookCopies = readCSVFilePath();
-                bookCopyDataBase.importBookCopies(csvFilePathBookCopies);
-                // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
-                System.out.println(bookCopyDataBase.getBookCopyDataBase().size() - 3 + " book copies have been " +
-                        "imported successfully");
-                break;
-            case 3:
-                String csvFilePathCustomers = readCSVFilePath();
-                customerDataBase.importCustomers(csvFilePathCustomers);
-                // da steht size()-3, weil die Liste schon 3 DummyObjects enthält und die werden nicht importiert
-                System.out.println(customerDataBase.getCustomerDataBase().size() - 3 + " customers have been imported" +
-                        " successfully");
-                break;
-            case 4:
-                String bookCopyID = readBookCopyID();
-                System.out.println(searchBookCopy(bookCopyID));
-
-
-                break;
-            case 5:
-                String bookCopyID2 = readBookCopyID();
-                borrowBookCopy(bookCopyID2, readClientID());
-                break;
-            case 6:
-                String bookCopyID3 = readBookCopyID();
-                returnBookCopy(bookCopyID3);
-                break;
-            case 7:
-                String customerID = readClientID();
-                deleteCustomerFromDatabase(customerID);
-                break;
-            case 8:
-                String bookISBN = readBookISBN();
-                deleteBookFromDataBase(bookISBN);
-                break;
-            case 9:
-                String bookCopyID1 = readBookCopyID();
-                deleteBookCopyFromDataBase(bookCopyID1);
-                break;
-            case 10:
-                printAllCustomers();
-                break;
-            case 11:
-                printAllBooks();
-                break;
-            case 12:
-                printAllNotBorrowedBookCopies();
-                break;
-            case 13:
-                printAllBorrowedBookCopies();
-                break;
-            case 14:
-                printAllBorrowedBookCopiesOfCustomer(customerDataBase.getCustomerDataBase().get(0));
-                break;
-
-
         }
     }
 
