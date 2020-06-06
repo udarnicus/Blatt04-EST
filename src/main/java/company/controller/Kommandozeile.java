@@ -255,19 +255,41 @@ public class Kommandozeile {
 
 
     /**
-     * Returns inportant information about the Book Copy
-     * <p>
-     * User has to input the ID of the book Copy
-     * <p>
-     * public so it can be tested from outside
-     * returns BookCopy so the output can be tested
+     * Methode returns book to the library
+     *
+     * It changes the LoanDate and LoanStatus, removes the book from the borrower and adds overdraftfees to the
+     * borrower if he brings the bookcopy to late back
+     *
+     * @return It returns an Integer for testing purposes - 0 not found, 1 found but to late, 2 found and in time
      */
 
 
-    public static BookCopy returnBookCopy(String bookCopyID) {
+    public static Integer returnBookCopy(String bookCopyID) {
 
-     //TODO to be implemented and tested by Radu
-        return null;
+        if(searchBookCopy(bookCopyID)!=null){
+            Date currentDate = new Date();
+            BookCopy bookCopy = searchBookCopy(bookCopyID);
+
+            if(currentDate.after(bookCopy.getLoanDate())){
+                bookCopy.getCurrentBorrower().setOverdraftFeeStatus(true);
+                bookCopy.getCurrentBorrower().getBooksOnLoan().remove(bookCopy);
+                bookCopy.setCurrentBorrower(null);
+                bookCopy.setLoanStatus(false);
+                bookCopy.setLoanDate(null);
+                System.out.println("Bookcopy was returned to late, there are overdraftfees to be payed!");
+                return 1;
+            }else {
+
+                bookCopy.getCurrentBorrower().getBooksOnLoan().remove(bookCopy);
+                bookCopy.setCurrentBorrower(null);
+                bookCopy.setLoanStatus(false);
+                bookCopy.setLoanDate(null);
+                System.out.println("Bookcopy was returned successfully!");
+                return 2;
+            }
+        }
+        System.out.println("Bookcopy could not be found!");
+        return 0;
     }
 
     /**

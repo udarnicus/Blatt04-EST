@@ -76,6 +76,9 @@ public class Customer {
     public void setOverdraftFeeStatus(boolean overdraftFeeStatus) {
         this.overdraftFeeStatus = overdraftFeeStatus;
     }
+    public boolean getOverdraftFeeStatus() {
+        return overdraftFeeStatus;
+    }
 
     @Override
     public String toString() {
