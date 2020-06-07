@@ -36,7 +36,7 @@ public class Kommandozeile {
 
 
             while (!userInputOK) {
-                userInput = getUserInput();
+                userInput = getUserInput().replaceAll("\\s+","");
 
                 try {
                     Integer.parseInt(userInput);
@@ -76,9 +76,11 @@ public class Kommandozeile {
                     break;
                 case 4:
                     String bookCopyID = readBookCopyID();
-                    System.out.println(searchBookCopy(bookCopyID));
-
-
+                    if(searchBookCopy(bookCopyID)!=null){
+                        System.out.println(searchBookCopy(bookCopyID));
+                    }else{
+                        System.out.println("BookCopy could not be found!");
+                    }
                     break;
                 case 5:
                     String bookCopyID2 = readBookCopyID();
@@ -113,7 +115,7 @@ public class Kommandozeile {
                     printAllBorrowedBookCopies();
                     break;
                 case 14:
-                    printAllBorrowedBookCopiesOfCustomer(customerDataBase.getCustomerDataBase().get(0));
+                    printAllBorrowedBookCopiesOfCustomer(readClientID());
                     break;
 
 
@@ -167,10 +169,16 @@ public class Kommandozeile {
     /**
      * Prints all borrowed bookCopies of a specific customer
      */
-    private static void printAllBorrowedBookCopiesOfCustomer(Customer customer) {
-        for (int k = 0; k < customer.getBooksOnLoan().size(); k++) {
-            System.out.println(customer.getBooksOnLoan().get(k));
+    private static void printAllBorrowedBookCopiesOfCustomer(String customerID) {
+        Customer customer = searchCustomer(customerID);
+        if(customer != null){
+            for (int k = 0; k < customer.getBooksOnLoan().size(); k++) {
+                System.out.println(customer.getBooksOnLoan().get(k));
+            }
+        }else{
+            System.out.println("Customer could not be found!");
         }
+
     }
 
     /**
@@ -195,7 +203,6 @@ public class Kommandozeile {
                 return bookCopy;
             }
         }
-        System.out.println("Book Copy could not be found!");
         return null;
     }
 
@@ -381,9 +388,21 @@ public class Kommandozeile {
      * Reads Book ISBN
      */
     private static String readBookISBN() {
-        System.out.println("Please insert the book ID:");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String input = "";
+        boolean userInputCorrect = false;
+
+        while(!userInputCorrect){
+            System.out.println("Please insert the book ID:");
+            Scanner scanner = new Scanner(System.in);
+            input = scanner.nextLine();
+            if(!input.isEmpty()){
+                userInputCorrect = true;
+            }else{
+                System.out.println("Please insert the book ID:");
+            }
+        }
+
+        return input;
     }
 
     /**

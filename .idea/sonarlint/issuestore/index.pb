@@ -17,8 +17,6 @@ U
 %src/test/java/TestDeleteBookCopy.java,e\2\e2dd33c51d9f727c904af47e215238d16a22a0db
 U
 %src/test/java/TestDeleteCustomer.java,d\e\deece62a3898b4d90ce22c33fa96b0f2b8edf929
-U
-%src/test/java/TestImportBookCopy.java,1\8\18e2b22e684fd4f17a8d45e2ff4ee1558a8720c3
 Q
 !src/test/java/TestDeleteBook.java,7\3\732ffd33a9725568b2068969cdb206e0a0943fd7
 U
