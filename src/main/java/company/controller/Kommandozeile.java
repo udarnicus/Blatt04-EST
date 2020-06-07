@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Represents the user interface for the library system
+ *
+ */
 public class Kommandozeile {
     private static BookCopyDataBase bookCopyDataBase;
     private static BookDataBase bookDataBase;
@@ -24,11 +28,10 @@ public class Kommandozeile {
 
     /**
      * Scans and verifies user input
+     *
+     * Loops infinitely so the program never stops and the user can always input a command
      */
 
-    // test
-
-    // test 2
     private static void scanForInput() {
         while(true) {
             String userInput = "";
